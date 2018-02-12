@@ -67,7 +67,21 @@ public class RobotExample {
         
         //pick up things
         wally.pickAllThings();
+        
+        //turn to face up
+        wally.turnRight();
        
-       
+        //leave things in intervals of 1 block
+        wally.putThing();
+        wally.move();
+        wally.putThing();
+        wally.move();
+        wally.putThing();
+        
+        //move robot to initial place
+        wally.move(2);
+        wally.turnRight();
+        wally.move(2);
+         
     }
 }
