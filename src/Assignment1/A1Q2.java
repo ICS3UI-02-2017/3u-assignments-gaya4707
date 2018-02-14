@@ -40,7 +40,7 @@ public class A1Q2 {
        new Wall(miami, 1, 2, Direction.EAST);
        
        //create thing
-       new Thing(miami, 2, 2)
+       new Thing(miami, 2, 2);
        
        //robot leave house
        karel.turnRight();

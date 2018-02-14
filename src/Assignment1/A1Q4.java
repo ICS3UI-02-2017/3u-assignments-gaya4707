@@ -7,6 +7,7 @@ package Assignment1;
 import becker.robots.City;
 import becker.robots.Direction;
 import becker.robots.RobotSE;
+import becker.robots.Wall;
 
 /**
  *
@@ -28,8 +29,8 @@ public class A1Q4 {
         //create robot2
         RobotSE eve = new RobotSE(miami, 0, 1, Direction.SOUTH);
         
-        //create walls
-        new Wall
+        //create wall
+        
         
         
         
