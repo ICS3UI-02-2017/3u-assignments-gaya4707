@@ -7,6 +7,8 @@ package Assignment1;
 import becker.robots.City;
 import becker.robots.Direction;
 import becker.robots.RobotSE;
+import becker.robots.Wall;
+import java.awt.Color;
 
 /**
  *
@@ -24,20 +26,19 @@ public class A1Q4 {
                 
         //create robot1
         RobotSE wally = new RobotSE(miami, 0, 0, Direction.SOUTH);
+        wally.setColor(Color.black);
         
         //create robot2
         RobotSE eve = new RobotSE(miami, 0, 1, Direction.SOUTH);
+        eve.setColor(Color.white);
         
         //create walls
-        new Wall
+        new Wall(miami, 0, 1, Direction.WEST);
+        new Wall(miami, 1, 1, Direction.WEST);
+        new Wall(miami, 1, 1, Direction.SOUTH);
         
-        
-        
-        
-        
-        
-        
-        
-                
+            
     }
-}
+        }
+
+        
