@@ -39,7 +39,20 @@ public class A1Q1 {
         new Wall (nashville, 2, 1, Direction.WEST);
         new Wall (nashville, 2, 2, Direction.SOUTH);
         new Wall (nashville, 2, 1, Direction.SOUTH);
+        new Wall (nashville, 1, 2, Direction.EAST);
+        new Wall (nashville, 2, 2, Direction.EAST);
         
+        //move robot around walls counterclockwise to starting position
+        wally.move(2);
+        wally.turnLeft();
+        wally.move(3);
+        wally.turnLeft();
+        wally.move(3);
+        wally.turnLeft();
+        wally.move(3);
+        wally.turnLeft();
+        wally.move();
+                
                 
     }
 
