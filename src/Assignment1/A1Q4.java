@@ -25,7 +25,7 @@ public class A1Q4 {
         
                 
         //create robot1
-        RobotSE wally = new RobotSE(miami, 0, 0, Direction.SOUTH);
+        final RobotSE wally = new RobotSE(miami, 0, 0, Direction.SOUTH);
         wally.setColor(Color.black);
         
         //create robot2
@@ -36,9 +36,23 @@ public class A1Q4 {
         new Wall(miami, 0, 1, Direction.WEST);
         new Wall(miami, 1, 1, Direction.WEST);
         new Wall(miami, 1, 1, Direction.SOUTH);
+       
+        new Thread(){
+            public void run(){
+                // do things for a robot
+                wally.move();
+                wally.move();
+                wally.move();
+                wally.move();
+            }
+        }.start();
         
+        eve.move();
+        eve.turnLeft();
+        eve.move();
             
     }
+    
         }
 
         
