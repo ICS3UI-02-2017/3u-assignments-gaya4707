@@ -7,6 +7,7 @@ package Assignment1;
 import becker.robots.City;
 import becker.robots.Direction;
 import becker.robots.RobotSE;
+import becker.robots.Thing;
 import becker.robots.Wall;
 
 /**
@@ -50,15 +51,25 @@ public class A1Q5 {
         new Thing(miami, 1, 0);
         new Thing(miami, 0, 0);
         
-        //create moves for robot1- leave house, pick things and meet maria
-        new Thread 
-                 void run(){
-                    wally.turnAround();
-                    wally.move();
-                    wally.
-                }start()
-                
         //create moves for Robot2 - pick things and meet karl
-                
+        maria.move();
+        maria.pickThing();
+        maria.turnLeft();
+        maria.move();
+        maria.turnLeft();
+        maria.pickThing();
+        maria.move();
+        maria.pickThing();
+        
+      
+        //create moves for robot1- leave house, pick things and meet maria
+        wally.turnAround();
+        wally.move();
+        wally.turnRight();
+        wally.move();
+        wally.pickThing();
+        wally.move();
+        wally.pickThing();
+        wally.turnLeft();
     }
 }
