@@ -37,20 +37,24 @@ public class A1Q4 {
         new Wall(miami, 1, 1, Direction.WEST);
         new Wall(miami, 1, 1, Direction.SOUTH);
        
+        //create thread for moves for Robot 1
         new Thread(){
             public void run(){
                 // do things for a robot
-                wally.move();
-                wally.move();
-                wally.move();
+                wally.move(2);
+                wally.turnLeft();
                 wally.move();
             }
         }.start();
         
+        //create moves for robot 2
         eve.move();
         eve.turnLeft();
         eve.move();
-            
+        eve.turnRight();
+        eve.move();
+        eve.turnRight();
+        eve.move();
     }
     
         }

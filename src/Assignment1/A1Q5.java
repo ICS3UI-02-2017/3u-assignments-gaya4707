@@ -28,7 +28,7 @@ public class A1Q5 {
         
         
         //create robot2 the neighbor
-        RobotSE maria = new RobotSE(miami, 0, 1, Direction.WEST);
+        final RobotSE maria = new RobotSE(miami, 0, 1, Direction.WEST);
         
         
         //write the letter k on robot1
@@ -51,15 +51,20 @@ public class A1Q5 {
         new Thing(miami, 1, 0);
         new Thing(miami, 0, 0);
         
-        //create moves for Robot2 - pick things and meet karl
-        maria.move();
-        maria.pickThing();
-        maria.turnLeft();
-        maria.move();
-        maria.turnLeft();
-        maria.pickThing();
-        maria.move();
-        maria.pickThing();
+        //create a thread for moves for Robot2 - pick things and meet karl
+        new Thread(){
+            public void run(){
+                 maria.move();
+                 maria.pickThing();
+                 maria.turnLeft();
+                 maria.move();
+                 maria.turnLeft();
+                 maria.pickThing();
+                 maria.move();
+                 maria.pickThing();
+            }
+        }.start();
+       
         
       
         //create moves for robot1- leave house, pick things and meet maria
