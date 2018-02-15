@@ -37,6 +37,20 @@ public class A1Q4 {
         new Wall(miami, 1, 1, Direction.WEST);
         new Wall(miami, 1, 1, Direction.SOUTH);
         
+         new Thread(){
+            public void run(){
+                // do things for a robot
+                wally.move();
+                wally.move();
+                wally.move();
+                wally.move();
+            }
+        }.start();
+        
+        eve.move();
+        eve.turnLeft();
+        eve.move();
+            
             
     }
         }
