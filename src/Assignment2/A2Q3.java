@@ -24,37 +24,24 @@ public class A2Q3 {
         //create robot
         RobotSE wally = new RobotSE(miami, 5, 8, Direction.EAST);
         
-       
-        while(wally.frontIsClear()){
-            //if statement to get the avenue 0, if not, turn right
-            if(wally.getAvenue()>0){
-                if(wally.isFacingNorth()){
-                    wally.move();
-                }while(!wally.isFacingNorth()){
+       //loop- if avenue more than 0, move
+        while(wally.getStreet()>0){
+            //loop- if robot is not facing north, turn around until does
+                while(!wally.isFacingNorth()){
                     wally.turnRight();
-                    if(wally.isFacingNorth()){
-                        wally.move();
-                    }
-                }
-            //if statement to get the street 0, if not, turn right       
-            }if(wally.getAvenue()==0){
-                    if(wally.getStreet()>0){
-                    if(wally.isFacingWest()){
-                        wally.move();
-                    }while(!wally.isFacingWest()){
-                        wally.turnRight();
-                        if(wally.isFacingWest()){
-                            wally.move();
-                        }
-                    }
-                }
-            }
                 
-            
-                
-            
+               }
+             wally.move();
         }
-        
-        
+        //loop- if street more than 0, move
+        while(wally.getAvenue()>0){
+            //loop- if robot is not facing west, turn around until does
+            while(!wally.isFacingWest()){
+                wally.turnRight();
+            }
+        wally.move();
+        }
     }
+    
+    
 }
