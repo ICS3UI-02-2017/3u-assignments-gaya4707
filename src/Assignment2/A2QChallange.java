@@ -139,6 +139,15 @@ public class A2QChallange {
 
 
         }
+        while(eve.frontIsClear()){
+            eve.move();
+            if(eve.canPickThing()){
+                eve.pickAllThings();
+            }
+        }
+        while(!eve.frontIsClear()){
+            eve.putAllThings();
+        }
 
 
 
