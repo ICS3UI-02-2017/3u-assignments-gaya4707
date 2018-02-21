@@ -105,6 +105,34 @@ public class A2QChallange {
         new Thing(miami, 9, 3);
         new Thing(miami, 9, 4);
         new Thing(miami, 9, 6);
+        new Thing(miami, 1, 1);
+        new Thing(miami, 2, 0);
+        new Thing(miami, 3, 0);
+        new Thing(miami, 4, 1);
+        new Thing(miami, 4, 0);
+        new Thing(miami, 5, 0);
+        new Thing(miami, 6, 1);
+        new Thing(miami, 8, 0);
+        new Thing(miami, 8, 1);
+        new Thing(miami, 9, 1);
+        new Thing(miami, 10, 0);
+        new Thing(miami, 10, 1);
+        new Thing(miami, 1, 3);
+        new Thing(miami, 1, 4);
+        new Thing(miami, 1, 6);
+        new Thing(miami, 2, 7);
+        new Thing(miami, 4, 6);
+        new Thing(miami, 4, 4);
+        new Thing(miami, 5, 6);
+        new Thing(miami, 5, 7);
+        new Thing(miami, 6, 7);
+        new Thing(miami, 6, 5);
+        new Thing(miami, 7, 4);
+        new Thing(miami, 7, 6);
+        new Thing(miami, 6, 7);
+        new Thing(miami, 10, 3);
+        new Thing(miami, 10, 4);
+        new Thing(miami, 10, 6);
 
         //loop- robot 1 clean a driveway
         while (wally.frontIsClear()) {
