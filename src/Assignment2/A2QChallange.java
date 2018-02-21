@@ -117,9 +117,9 @@ public class A2QChallange {
                     wally.pickAllThings();
                     wally.move();
                 }
-                //once reached the end of driveway turn around and walk to the end of sidewalk to putdown all the snow
+                //once reached the end of driveway(if there is snow pick it up )and turn around and walk to the end of sidewalk to putdown all the snow
                 if (!wally.frontIsClear()) {
-                    if(wally.canPickThing()){
+                    if (wally.canPickThing()) {
                         wally.pickAllThings();
                     }
                     wally.turnAround();
@@ -139,13 +139,15 @@ public class A2QChallange {
 
 
         }
-        while(eve.frontIsClear()){
+        //create loop for eve to check each spot of the sidewalk and pick up snow if there is
+        while (eve.frontIsClear()) {
             eve.move();
-            if(eve.canPickThing()){
+            if (eve.canPickThing()) {
                 eve.pickAllThings();
             }
         }
-        while(!eve.frontIsClear()){
+        //once reached the end of sidewalk dunp all snow
+        while (!eve.frontIsClear()) {
             eve.putAllThings();
         }
 
