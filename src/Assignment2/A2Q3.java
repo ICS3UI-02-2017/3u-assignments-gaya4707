@@ -20,28 +20,26 @@ public class A2Q3 {
     public static void main(String[] args) {
         // create city
         City miami = new City();
-                
+
         //create robot
         RobotSE wally = new RobotSE(miami, 5, 8, Direction.EAST);
-        
-       //loop- if avenue more than 0, move
-        while(wally.getStreet()>0){
+
+        //loop- if avenue more than 0, move
+        while (wally.getStreet() > 0) {
             //loop- if robot is not facing north, turn around until does
-                while(!wally.isFacingNorth()){
-                    wally.turnRight();
-                
-               }
-             wally.move();
+            while (!wally.isFacingNorth()) {
+                wally.turnRight();
+
+            }
+            wally.move();
         }
         //loop- if street more than 0, move
-        while(wally.getAvenue()>0){
+        while (wally.getAvenue() > 0) {
             //loop- if robot is not facing west, turn around until does
-            while(!wally.isFacingWest()){
+            while (!wally.isFacingWest()) {
                 wally.turnRight();
             }
-        wally.move();
+            wally.move();
         }
     }
-    
-    
 }

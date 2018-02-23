@@ -22,10 +22,10 @@ public class A2Q2 {
     public static void main(String[] args) {
         // create city
         City miami = new City();
-        
+
         //create robot
         RobotSE wally = new RobotSE(miami, 1, 1, Direction.EAST);
-        
+
         //crete floor
         new Wall(miami, 1, 0, Direction.SOUTH);
         new Wall(miami, 1, 1, Direction.SOUTH);
@@ -37,20 +37,20 @@ public class A2Q2 {
         new Wall(miami, 1, 7, Direction.SOUTH);
         new Wall(miami, 1, 8, Direction.SOUTH);
         new Wall(miami, 1, 9, Direction.SOUTH);
-        
+
         //create 4 hurdles
         new Wall(miami, 1, 1, Direction.EAST);
         new Wall(miami, 1, 2, Direction.EAST);
         new Wall(miami, 1, 4, Direction.EAST);
         new Wall(miami, 1, 7, Direction.EAST);
-        
+
         //create the finish line(Thing)
         new Thing(miami, 1, 9);
-        
+
         //while loop to avoid obsticles
-        while(!wally.canPickThing()){
+        while (!wally.canPickThing()) {
             //if statement to go around the obsticle
-            if(!wally.frontIsClear()){
+            if (!wally.frontIsClear()) {
                 wally.turnLeft();
                 wally.move();
                 wally.turnRight();
@@ -58,15 +58,14 @@ public class A2Q2 {
                 wally.turnRight();
                 wally.move();
                 wally.turnLeft();
-            }else{
+            } else {
                 wally.move();
             }
 
         }
         //do nothing if reaches a thing
-        if(wally.canPickThing()){
-            
+        if (wally.canPickThing()) {
         }
-        
+
     }
 }
