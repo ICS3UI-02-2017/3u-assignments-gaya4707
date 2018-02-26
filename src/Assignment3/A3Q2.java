@@ -21,6 +21,9 @@ public class A3Q2 {
     public static void main(String[] args) {
         // create city for robot
         City miami = new City();
+        
+        //show number of things
+        miami.showThingCounts(true);
 
         // create robot
         RobotSE wally = new RobotSE(miami, 0, 2, Direction.EAST);
@@ -40,13 +43,13 @@ public class A3Q2 {
         //create loop to pick thing, go 5 steps, and put it down
         for (int backAndForth = 0; backAndForth < 10; backAndForth++) {
             wally.pickThing();
-            wally.move(5);
+            wally.move();
             wally.putThing();
             wally.turnAround();
-            wally.move(5);
+            wally.move();
             wally.turnAround();
         }
         //move to stand on the pile
-        wally.move(5);
+        wally.move();
     }
 }
