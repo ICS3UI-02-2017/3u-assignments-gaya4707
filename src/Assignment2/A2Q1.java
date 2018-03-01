@@ -45,17 +45,17 @@ public class A2Q1 {
                 wally.move();
                 wally.pickThing();
             }
-            
+
         }
         //move robot to next spot
         wally.move();
-        
-            //while statemant to stop after it picked up 7 items
-            while (wally.countThingsInBackpack() == 7) {
-                if (wally.canPickThing()) {
-                    wally.move();
-                }
+
+        //while statemant to stop after it picked up 7 items
+        while (wally.countThingsInBackpack() == 7) {
+            if (wally.canPickThing()) {
+                wally.move();
             }
+        }
 
     }
 }
