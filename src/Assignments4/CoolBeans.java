@@ -17,7 +17,7 @@ public class CoolBeans {
      */
     public static void main(String[] args) {
         //playing around with new stuff
-        System.out.println("Hello fello earthian");
+        System.out.println("Hello fellow earthian");
         System.out.print("plaese present yourself: ");
         
         Scanner input = new Scanner(System.in);
@@ -34,9 +34,12 @@ public class CoolBeans {
             System.out.println("Just keep being awesome and eat more choclate because no matter what life throws at you");
             System.out.println("chocolate will always make you feel better");    
         }if(choiceNumber ==3){
-            System.out.println("you are a piece of paper");
+            System.out.println(name + ",you are a piece of paper");
         }if(choiceNumber ==4){
-            System.out.println("you are a child of god");
+            System.out.println(name + ",you are a child of god");
+        }else{
+            System.out.println("what the f%ck man! I told you to pick from 1 to 10 !");
+            System.out.println("Mr. " + name + ", you don't deserve my fortune!!!");
         }
         System.out.println("");
     }
