@@ -32,7 +32,14 @@ public class A4Q6 {
         //if statement for each casenario
         if(speedOverLimit<= 0){
             System.out.println("Congragulations! you are within the speed limit !");
-        }if(speedOverLimit)
+        }if(speedOverLimit>=0 && speedOverLimit<=20){
+            System.out.println("You are speeding! your fine is 100$");
+        }if(speedOverLimit>20 && speedOverLimit<=30){
+            System.out.println("You are speeding! your fine is 270$");
+        }if(speedOverLimit>30){
+            System.out.println("You are speeding ! your fine is 500$");
+        }
+           
         
         
     }
