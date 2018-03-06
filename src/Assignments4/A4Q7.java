@@ -18,44 +18,45 @@ public class A4Q7 {
     public static void main(String[] args) {
         // introduce the scanner
         Scanner input = new Scanner(System.in);
+        
+        //introduce the initaial landing spot
+        int landingSpot = 1;
+        
+        //begin a big loo that wil go on untill the user wins the game - gets to spot 100
+        while(landingSpot<100){
+            //ask user for result of roll of dice
+            System.out.println("Plese insert the result of the dice roll: ");
+            int diceResult = input.nextInt();
+            //check if the input is valid - if not, exit game
+            if(diceResult<2 || diceResult>12){
+                System.out.println("Game over!");
+                System.exit(0);
+                //if yes calculate the next spot
+            }if(diceResult>=2 || diceResult<=12){
+                landingSpot = landingSpot + diceResult;
+                //check if on a ladder - if yes go up the ladder,if not move on to next order
+                if(landingSpot == 9){
+                    landingSpot = 34;
+                }if(landingSpot ==40){
+                    landingSpot=64;
+                }if(landingSpot==67){
+                    landingSpot=68;
+                }
+                //if on a snake slide down, if not - move on to next order
+                if(landingSpot==54){
+                    landingSpot=19;
+                }if(landingSpot==90){
+                    landingSpot= 48;
+                }if(landingSpot==99){
+                    landingSpot=77;
+                }
+                //display the new landing spot
+                System.out.println("You are now on square " + landingSpot+".");
+            }
+        }
+        //once reach spot 100, print congradulations
+        System.out.println("congradulations, you win!");
 
         
-            //ask user to input their number on dice
-            System.out.print("Plese enter the result of your dice throwing: ");
-            int firstDiceResult = input.nextInt();
-
-            //if number is smallr than 2 print you quit
-            while (firstDiceResult < 2 || firstDiceResult > 12) {
-                System.out.println("You Quit !");
-                System.out.println("Game Over");
-            }
-            //calculate the first landing spot
-            int firstLandingSpot = 1 + firstDiceResult;
-            //present the first landing spot and continue to ask what the new reslt is
-            while (firstDiceResult > 2 || firstDiceResult < 12) {
-                //keep  it in a loop and keep asking what the result of the dice is
-                while(landingSpot!=100){
-                //go up the ladder if land on 9
-                if (landingSpot == 9) {
-                    System.out.println("You are now on square 34");
-                    landingSpot = 34;
-                }
-                //go up the ladder if lands on 40
-                if (landingSpot == 40) {
-                    System.out.println("You are now on square 64");
-                    landingSpot = 64;
-                }
-                //go up ladder if land on 67
-                if (landingSpot == 67) {
-                    System.out.println("you are now on 86");
-                    landingSpot = 86;
-                }
-
-               System.out.print("Please enter the result of your dice result:");
-               int diceResult = input.nextInt();
-               int landingSpot = diceResult + 
-            }
-
-        }
     }
 }
