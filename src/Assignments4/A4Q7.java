@@ -50,6 +50,10 @@ public class A4Q7 {
                 }if(landingSpot==99){
                     landingSpot=77;
                 }
+                //if the result is more than 100, go back to the previous spot and try again
+                if(landingSpot>100){
+                    landingSpot = landingSpot - diceResult;
+                }
                 //display the new landing spot
                 System.out.println("You are now on square " + landingSpot+".");
             }
