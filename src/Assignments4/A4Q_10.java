@@ -27,12 +27,39 @@ public class A4Q_10 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        FerText = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        CelText = new javax.swing.JTextField();
+        FerToCelBut = new javax.swing.JButton();
+        CelToFerBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Simplified Arabic Fixed", 0, 18)); // NOI18N
         jLabel1.setText("Degrees Fahrenheit:");
+
+        jLabel2.setFont(new java.awt.Font("Simplified Arabic Fixed", 0, 18)); // NOI18N
+        jLabel2.setText("Degrees Celsius:");
+
+        CelText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CelTextActionPerformed(evt);
+            }
+        });
+
+        FerToCelBut.setText("F --> C");
+        FerToCelBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FerToCelButActionPerformed(evt);
+            }
+        });
+
+        CelToFerBut.setText("C --> F");
+        CelToFerBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CelToFerButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -40,10 +67,20 @@ public class A4Q_10 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(CelText))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FerText, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FerToCelBut)
+                    .addComponent(CelToFerBut))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -54,12 +91,69 @@ public class A4Q_10 extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(196, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(FerText, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FerToCelBut))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CelText, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CelToFerBut))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CelTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CelTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CelTextActionPerformed
+
+    private void FerToCelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FerToCelButActionPerformed
+        // get the temp' in F' in textbox
+        String ferString = FerText.getText();
+        
+        //convert the degrees F to an integer
+        double ferInt = Double.parseDouble(ferString);
+        
+        //calculate the degrees in Celcius in 3 steps for more accurate answer
+        double devideBy = 9/5.0;
+        double celCalc = ferInt - 32;
+        double celInt = celCalc/devideBy;
+        
+        //round the number to 4 decimal places
+        double celR = celInt*10000.0;
+        celR = Math.round(celR);
+        double celNum = celR/10000.0; 
+        
+        //display the answer in the c' textbox
+        CelText.setText(" " + celNum);
+    }//GEN-LAST:event_FerToCelButActionPerformed
+
+    private void CelToFerButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CelToFerButActionPerformed
+        // get the temp' in C' in textbox
+        String celstring = CelText.getText();
+        
+        //convert the degrees in C' to an integer
+        double celInt = Double.parseDouble(celstring);
+        
+        //calculate the degrees in F' in 3 steps for more accurate answer
+        double multiplyBy = 9/5.0;
+        double ferCalc = (celInt*multiplyBy);
+        double ferInt = ferCalc + 32;
+        
+        //round the number to 4 decimal places
+        double ferR = ferInt*10000.0;
+        ferR = Math.round(ferR);
+        double ferNum = ferR/10000.0; 
+        
+        //display the answer in the f' textbox
+        FerText.setText(" "+ ferNum);
+    }//GEN-LAST:event_CelToFerButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -96,7 +190,11 @@ public class A4Q_10 extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CelText;
+    private javax.swing.JButton CelToFerBut;
+    private javax.swing.JTextField FerText;
+    private javax.swing.JButton FerToCelBut;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
