@@ -4,16 +4,19 @@
  */
 package Assignment5;
 
-/**
+import jdk.nashorn.internal.runtime.regexp.RegExp;
+
+
+    /**
  *
  * @author shnag4707
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class A5 extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public A5() {
         initComponents();
     }
 
@@ -95,9 +98,10 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void InputBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputBoxActionPerformed
-        // TODO add your handling code here:
+        // user inserts the phrase in english here to be translated
     }//GEN-LAST:event_InputBoxActionPerformed
 
+    @SuppressWarnings("empty-statement")
     private void ButtonToTranslateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonToTranslateActionPerformed
         //get the sentance from the input box
         String english = InputBox.getText();
@@ -105,13 +109,22 @@ public class NewJFrame extends javax.swing.JFrame {
         //check the length of the word
         int length = english.length();
         
+               
         //loop to check each word for the pattern
+        ?
+            //loop to check each syllable in each word
+            if(english.charAt(length)=='a'){
+                String abi = english.replace(String "a", String "uba");
+        }
+        
+        //display the new word in the output box
+            OutputLanguage.setText(abi);
+        }
         
             
         }
     }//GEN-LAST:event_ButtonToTranslateActionPerformed
-
-    /**
+/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
