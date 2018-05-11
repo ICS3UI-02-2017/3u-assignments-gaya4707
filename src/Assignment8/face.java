@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import static javafx.scene.paint.Color.color;
 import javax.swing.Timer;
 
 /**
@@ -38,7 +39,8 @@ public class face extends JComponent implements ActionListener {
     Timer gameTimer;
 
     // YOUR GAME VARIABLES WOULD GO HERE
-    
+    //cretae skin colour
+    Color skin = new Color(255, 163, 100);
 
 
     // GAME VARIABLES END HERE    
@@ -83,12 +85,28 @@ public class face extends JComponent implements ActionListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
-        //pick a colour 
+        //pick a colour
+        
         //create circle outline to be aresed later
         g.drawOval(150,150, 400, 400);
         //cretae facial guidelines through it ro be areased later
         g.drawLine(150, 350, 550, 350);
         g.drawLine(350, 150, 350, 550);
+        
+        
+        
+        //set colour to skin
+        g.setColor(skin);
+        //create jawline
+        g.fillRoundRect(150, 350, 390, 210, 45, 90);
+        g.fillArc(160, 400, 370, 250, 180, 180);
+        g.fillArc(300, 610, 90, 60, 180, 180);
+        
+        //colour in the round face
+        g.fillOval(150, 150, 400, 400);
+        
+        //set colou to black
+        g.setColor(Color.BLACK);
         
         //create outline of eyes on the horizontal line
         //top left eye
@@ -100,9 +118,12 @@ public class face extends JComponent implements ActionListener {
         //bottom right
         g.drawArc(290, 200, 220, 170, 300, 35);
         
-        //create jawline
-        g.drawRoundRect(150, 350, 400, 250, 45, 90);
-		
+        //draw the nose using 2 arches
+        g.drawArc(365, 450, 70, 90, 140, 20);
+	g.drawArc(270, 465, 70, 90, 40, 25);
+        
+        //draw eyebows
+        g.fillRect(WIDTH, WIDTH, WIDTH, WIDTH);
 		
         // GAME DRAWING ENDS HERE
     }
