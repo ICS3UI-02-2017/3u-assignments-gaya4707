@@ -41,6 +41,9 @@ public class face extends JComponent implements ActionListener {
     // YOUR GAME VARIABLES WOULD GO HERE
     //cretae skin colour
     Color skin = new Color(255, 163, 100);
+    
+    //create colour for eyebrows
+    Color eyebrows = new Color(140, 72, 16);
 
 
     // GAME VARIABLES END HERE    
@@ -122,8 +125,33 @@ public class face extends JComponent implements ActionListener {
         g.drawArc(365, 450, 70, 90, 140, 20);
 	g.drawArc(270, 465, 70, 90, 40, 25);
         
-        //draw eyebows
-        g.fillRect(WIDTH, WIDTH, WIDTH, WIDTH);
+        //change to eyebroe colour
+        g.setColor(eyebrows);
+        //draw eyebows using triangle shapes
+        // create x and y set for right eyebrow
+        int[] rightX = {357, 380, 500, 530, 500};
+        int[] rightY = {330, 330, 290, 310, 280};
+        //cretae right eyebrow pantagon
+        g.fillPolygon(rightX, rightY, 5);
+        //create x and y set for left eyebrow
+        int[] leftX = {350, 327, 207, 177, 207};
+        int[] leftY = {330, 330, 290, 310, 280};
+        //create left eyebrow pantagon
+        g.fillPolygon(leftX, leftY, 5);
+        
+        //change color back to black
+        g.setColor(Color.BLACK);
+        //create a smaile using arch and a line
+        g.drawArc(190, 460, 300, 100, 280, 90);
+        g.drawLine(290, 565, 335, 560);
+        
+        //create ears using arches
+        g.drawArc(490, 310, 100, 150, 270, 150);
+        g.drawArc(100, 310, 100, 150, 120, 150);
+        
+        
+        
+        
 		
         // GAME DRAWING ENDS HERE
     }
