@@ -44,6 +44,9 @@ public class face extends JComponent implements ActionListener {
     
     //create colour for eyebrows
     Color eyebrows = new Color(140, 72, 16);
+    
+    //create colour for hair
+    Color blonde = new Color(239, 243, 14);
 
 
     // GAME VARIABLES END HERE    
@@ -148,6 +151,18 @@ public class face extends JComponent implements ActionListener {
         //create ears using arches
         g.drawArc(490, 310, 100, 150, 270, 150);
         g.drawArc(100, 310, 100, 150, 120, 150);
+        //add the inside of ears using lines
+        g.drawLine(130, 350, 150, 410);
+        g.drawLine(570, 355, 540, 415);
+        
+        //change color to blonde
+        g.setColor(blonde);
+        //create pentagon that is his hair
+        //set x and y coordinates
+        int[]  hairX = {150, 125, 110, 270, 273};
+        int[]  hairY = {360, 320, 70, 20, 30, 23};
+        //create the pentagon
+        g.fillPolygon(hairX, hairY, 5);
         
         
         
