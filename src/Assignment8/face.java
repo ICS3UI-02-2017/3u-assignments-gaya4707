@@ -150,20 +150,38 @@ public class face extends JComponent implements ActionListener {
         
         //create ears using arches
         g.drawArc(490, 310, 100, 150, 270, 150);
-        g.drawArc(100, 310, 100, 150, 120, 150);
+        g.drawArc(105, 310, 100, 150, 120, 150);
+        
+        
+        //set color to skin
+        g.setColor(skin);
+        //color in the ears
+        g.fillArc(490, 310, 100, 150, 270, 150);
+        g.fillArc(105, 310, 100, 150, 120, 150);
+        
+        //change color to blonde
+        g.setColor(blonde);
+        //create pentagon that will be his hair
+        //set x and y coordinates
+        int[]  hairX = {150,125,110,270,273,285,300,310,320,450,442,460,585,570,550,546,530,500,490,350,210,200,170,154,150};
+        int[]  hairY = {370,320,70,20, 30, 25, 5, 30, 2, 40, 15, 34, 60,318,360,320,345,250,245,225,245,250,345,310,345};
+        //create the pentagon 
+        g.fillPolygon(hairX, hairY, 24);
+        
+        //change color to black
+        g.setColor(Color.BLACK);
+        //outline the hair
+        g.drawPolygon(hairX, hairY, 24);
         //add the inside of ears using lines
         g.drawLine(130, 350, 150, 410);
         g.drawLine(570, 355, 540, 415);
         
-        //change color to blonde
-        g.setColor(blonde);
-        //create pentagon that is his hair
-        //set x and y coordinates
-        int[]  hairX = {150, 125, 110, 270, 273};
-        int[]  hairY = {360, 320, 70, 20, 30, 23};
-        //create the pentagon
-        g.fillPolygon(hairX, hairY, 5);
-        
+        //change color to blue
+        g.setColor(Color.BLUE);
+        //draw in the left eye color
+        g.fillArc(240, 300, 60, 50, 345, -185);
+        g.fillArc(237, 320, 60, 20, 340, 180);
+        g.fillArc(240, 315, 30, 15, 0, 180);
         
         
         
