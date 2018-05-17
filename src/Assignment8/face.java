@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -31,7 +32,7 @@ public class face extends JComponent implements ActionListener {
     // sets the framerate and delay for our game
     // this calculates the number of milliseconds per frame
     // you just need to select an approproate framerate
-    int desiredFPS = 60;
+    int desiredFPS = 10;
     int desiredTime = Math.round((1000 / desiredFPS));
     
     // timer used to run the game loop
@@ -39,6 +40,9 @@ public class face extends JComponent implements ActionListener {
     Timer gameTimer;
 
     // YOUR GAME VARIABLES WOULD GO HERE
+    
+    //create variable for bachround color
+    Color backroundColor = new Color(130, 226, 129);
     //cretae skin colour
     Color skin = new Color(255, 163, 100);
     
@@ -47,7 +51,18 @@ public class face extends JComponent implements ActionListener {
     
     //create colour for hair
     Color blonde = new Color(239, 243, 14);
-
+    
+    //create variable for y of right eyebrow(to move up and down)
+    int rightBrowY = 330;
+    
+    //create variable for y of left eyebrow(to move down and up)
+    int leftBrowY =330;
+    
+    //create variable for the toxic symbol x9to move across trhe screen
+    int symbolX = -100;
+    
+    //create font for the title of face
+    Font fontTitle = new Font("Times New Roman", Font.BOLD, 30);
 
     // GAME VARIABLES END HERE    
 
@@ -91,7 +106,9 @@ public class face extends JComponent implements ActionListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
-        //pick a colour
+        //set backround color green
+        g.setColor(backroundColor);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
         
         //create circle outline to be aresed later
         g.drawOval(150,150, 400, 400);
@@ -133,12 +150,12 @@ public class face extends JComponent implements ActionListener {
         //draw eyebows using triangle shapes
         // create x and y set for right eyebrow
         int[] rightX = {357, 380, 500, 530, 500};
-        int[] rightY = {330, 330, 290, 310, 280};
+        int[] rightY = {rightBrowY, rightBrowY, 290, 310, 280};
         //cretae right eyebrow pantagon
         g.fillPolygon(rightX, rightY, 5);
         //create x and y set for left eyebrow
         int[] leftX = {350, 327, 207, 177, 207};
-        int[] leftY = {330, 330, 290, 310, 280};
+        int[] leftY = {leftBrowY, leftBrowY, 290, 310, 280};
         //create left eyebrow pantagon
         g.fillPolygon(leftX, leftY, 5);
         
@@ -194,15 +211,23 @@ public class face extends JComponent implements ActionListener {
         g.fillOval(265, 320, 20, 20);
         g.fillOval(415, 320, 20, 20);
         
+        //write the words "johnny test" in the left top corner uding font variable
+        g.setFont(fontTitle);
+        g.drawString("Johnny Test: ", 20, 40);
+        
+        
+        
         
         //draw a johnny test(character) referance
         //draw the toxic signbehin the screen
         //draw a black circle
-        g.fillOval(-100, 550, 60, 60);
+        g.fillOval(symbolX, 650, 80, 80);
         //change color to yellow
         g.setColor(Color.YELLOW);
         //draw 3 arches 
-        g.fillArc(ERROR, ERROR, ERROR, ERROR, ERROR, ERROR);
+        g.fillArc(symbolX, 650, 80, 80, 60, 60);
+        g.fillArc(symbolX, 650, 80, 80, 180, 60);
+        g.fillArc(symbolX, 650, 80, 80, 300, 60);
 		
         // GAME DRAWING ENDS HERE
     }
@@ -217,7 +242,26 @@ public class face extends JComponent implements ActionListener {
     // The main game loop
     // In here is where all the logic for my game will go
     public void gameLoop() {
+        //move right eyebrow up and down
+        if(rightBrowY==330){
+            rightBrowY = rightBrowY -15;
+        }else if(rightBrowY==315){
+            rightBrowY = rightBrowY +15;
+        }
         
+        //move left eyebrow up and down
+        if(leftBrowY==330){
+            leftBrowY = leftBrowY -15;
+        }else if(leftBrowY==315){
+            leftBrowY = leftBrowY +15;
+        }
+        
+        //move the toxic symbol across the screen 
+        symbolX = symbolX +10;
+        //if leaves the screen bring back to the initial spot
+        if(symbolX>WIDTH){
+            symbolX = -100;
+        }
     }
 
     private void drawArc(int i, int i0, int i1, int i2, int i3, int i4) {
