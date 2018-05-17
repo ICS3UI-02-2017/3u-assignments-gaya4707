@@ -183,8 +183,26 @@ public class face extends JComponent implements ActionListener {
         g.fillArc(237, 320, 60, 20, 340, 180);
         g.fillArc(240, 315, 30, 15, 0, 180);
         
+        //draw in right eye
+        g.fillArc(400, 300, 60, 50, 25, -185);
+        g.fillArc(402, 320, 60, 20, 20, 180);
+        g.fillArc(430, 315, 30, 15, 0, 180);
+        
+        //change color to black
+        g.setColor(Color.BLACK);
+        //draw in pupils in the eyes using circles
+        g.fillOval(265, 320, 20, 20);
+        g.fillOval(415, 320, 20, 20);
         
         
+        //draw a johnny test(character) referance
+        //draw the toxic signbehin the screen
+        //draw a black circle
+        g.fillOval(-100, 550, 60, 60);
+        //change color to yellow
+        g.setColor(Color.YELLOW);
+        //draw 3 arches 
+        g.fillArc(ERROR, ERROR, ERROR, ERROR, ERROR, ERROR);
 		
         // GAME DRAWING ENDS HERE
     }
