@@ -2,6 +2,7 @@ package Examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -55,6 +56,13 @@ public class gameExPong extends JComponent implements ActionListener {
     boolean paddle2Up = false;
     boolean paddle2Down = false;
     int paddleSpeed = 5;
+    
+    // score variables
+    int score1 = 0;
+    int score2 = 0;
+    
+    //create a custom font
+    Font biggerFont = new Font("arial", Font.PLAIN, 36);
 
 
     // GAME VARIABLES END HERE    
@@ -110,6 +118,11 @@ public class gameExPong extends JComponent implements ActionListener {
         
         //draw ball
         g.fillRect(ball.x, ball.y, ball.width, ball.height);
+        
+        //draw scores
+        g.setFont(biggerFont);
+        g.drawString(""+score1, WIDTH/2- 150, 50);
+        g.drawString("" +score2, WIDTH/2+ 150, 50);
 		
 		
         // GAME DRAWING ENDS HERE
@@ -144,11 +157,23 @@ public class gameExPong extends JComponent implements ActionListener {
     }
 
     private void movePaddles() {
+        //player 1 control
         if(paddle1Up){
             paddle1.y = paddle1.y - paddleSpeed;
         }else if(paddle1Down){
             paddle1.y = paddle1.y + paddleSpeed;
         }
+        //ckeck for colition 
+        //if paddles too far up
+        if(paddle1.y<0){
+            //reset
+            paddle1.y=0;
+            //had bottom gone too far
+        }else if(paddle1.y +paddle1.height>HEIGHT){
+            paddle1.y = HEIGHT-paddle1.y ;
+        }
+        
+        //player 2 control
         if(paddle2Up){
             paddle2.y = paddle2.y - paddleSpeed;
         }else if(paddle2Down){
@@ -158,11 +183,46 @@ public class gameExPong extends JComponent implements ActionListener {
     }
 
     private void checkForCollision() {
+        // collition with bottom/top
+        if(ball.y<0){
+            ballAngle = ballAngle*(-1);
+        }
+        if(ball.y+ball.height > HEIGHT){
+            ballAngle = ballAngle*(-1);
+        }
+        
+        //check collide w/ paddles
+        //note: %360 to make sure we don't go over 360
+        if(ball.intersects(paddle1)){
+            ballAngle = (180 + ballAngle*(-1))%360;
+        }
+        if(ball.intersects(paddle2)){
+            ballAngle = (180 + ballAngle*(-1))%360;
+        }
+        //differeny wat
+        //if(!(b1.x>b2.x+b2.width||b1.x+b1.width<b2.x||...)) if not to hitting it
+        
         
 
     }
     private void checkForGoal() {
-        
+        //if ball is off left hand side
+        if(ball.x<0){
+            //add to player 2 score
+            score2++;
+            //put ball back on screen
+            ball.x = WIDTH/2-ball.width/2;
+            ball.y = HEIGHT/2-ball.height/2;
+            
+        }
+        //if ball hits rigght hand side
+        if(ball.x+ball.width>WIDTH){
+            //add to player 1 score
+            score1++;
+            //put ball back on screen
+            ball.x = WIDTH/2-ball.width/2;
+            ball.y = HEIGHT/2-ball.height/2;
+        }
     }
 
     // Used to implement any of the Mouse Actions
@@ -199,15 +259,16 @@ public class gameExPong extends JComponent implements ActionListener {
         // if a key has been pressed down
         @Override
         public void keyPressed(KeyEvent e) {
+            //move paddles when key pressed
             int keyCode = e.getKeyCode();
             if(keyCode == KeyEvent.VK_W){
                 paddle1Up = true;
-            }else if (KeyCode == KeyEvent.VK_S){
+            }else if (keyCode == KeyEvent.VK_S){
                 paddle1Down = true;
             }
             if(keyCode == KeyEvent.VK_UP){
                 paddle2Up = true;
-            }else if (KeyCode == KeyEvent.VK_DOWN){
+            }else if (keyCode == KeyEvent.VK_DOWN){
                 paddle2Down = true;
             }
         }
@@ -215,15 +276,16 @@ public class gameExPong extends JComponent implements ActionListener {
         // if a key has been released
         @Override
         public void keyReleased(KeyEvent e) {
+            //stop moving paddles when key relsed
             int keyCode = e.getKeyCode();
             if(keyCode == KeyEvent.VK_W){
                 paddle1Up = false;
-            }else if (KeyCode == KeyEvent.VK_S){
+            }else if (keyCode == KeyEvent.VK_S){
                 paddle1Down = false;
             }
             if(keyCode == KeyEvent.VK_UP){
                 paddle2Up = false;
-            }else if (KeyCode == KeyEvent.VK_DOWN){
+            }else if (keyCode == KeyEvent.VK_DOWN){
                 paddle2Down = false;
             }
         }
