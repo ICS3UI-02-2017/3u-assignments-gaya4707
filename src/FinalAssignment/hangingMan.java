@@ -1,10 +1,13 @@
 package FinalAssignment;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,8 +24,8 @@ import javax.swing.Timer;
 public class hangingMan extends JComponent implements ActionListener {
 
     // Height and Width of our game
-    static final int WIDTH = 800;
-    static final int HEIGHT = 600;
+    static final int WIDTH = 900;
+    static final int HEIGHT = 800;
 
     //Title of the window
     String title = "Hanging Man";
@@ -38,7 +41,11 @@ public class hangingMan extends JComponent implements ActionListener {
     Timer gameTimer;
 
     // YOUR GAME VARIABLES WOULD GO HERE
+    //custom create font of title of game
+    Font gameTitle = new Font("Britannic Bold", Font.PLAIN, 42);
     
+    //set custom line thickness for hangman drawing
+    BasicStroke manLineThick = new BasicStroke(5);
 
 
     // GAME VARIABLES END HERE    
@@ -79,11 +86,35 @@ public class hangingMan extends JComponent implements ActionListener {
     // NOTE: This is already double buffered!(helps with framerate/speed)
     @Override
     public void paintComponent(Graphics g) {
+        //use adavnced graphics class
+        Graphics2D g2D = (Graphics2D)g;
         // always clear the screen first!
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
+        //set color of backround
+        
+        //set the custom font for tittle
+        g.setFont(gameTitle);
+        //write title of game in middle of sreen on top
+        g.drawString("Hanging Man", 300, 50);
+        //write instructions underneath title
         //draw the man in same color as backround
+        g.setColor(Color.black);
+        //set custom thickness of drawing
+        g2D.setStroke(manLineThick);
+        //draw the platform of man in bottom right cornor
+        g.drawLine(430, HEIGHT-70, WIDTH-80, HEIGHT-70);
+        g.drawLine(430, HEIGHT-70, 430, 370);
+        g.drawLine(430, 370, 625, 370);
+        g.drawLine(625, 370, 625, 420);
+        g.drawOval(570, 420, 110, 110);
+        
+        
+        
+        
+        
+        
         //set to draw number of lines as the word
 		
 		
