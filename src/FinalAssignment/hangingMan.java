@@ -15,6 +15,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javax.swing.Timer;
 
 /**
@@ -46,6 +49,14 @@ public class hangingMan extends JComponent implements ActionListener {
     
     //set custom line thickness for hangman drawing
     BasicStroke manLineThick = new BasicStroke(5);
+    
+    //set custom line thickness for the face
+    BasicStroke faceLineThick = new BasicStroke(2);
+    
+    //create empty variable for scanner
+    Scanner in = null;
+    
+    
 
 
     // GAME VARIABLES END HERE    
@@ -75,7 +86,7 @@ public class hangingMan extends JComponent implements ActionListener {
         this.addMouseMotionListener(m);
         this.addMouseWheelListener(m);
         this.addMouseListener(m);
-        
+        preSetup();
         gameTimer = new Timer(desiredTime,this);
         gameTimer.setRepeats(true);
         gameTimer.start();
@@ -108,7 +119,33 @@ public class hangingMan extends JComponent implements ActionListener {
         g.drawLine(430, HEIGHT-70, 430, 370);
         g.drawLine(430, 370, 625, 370);
         g.drawLine(625, 370, 625, 420);
+        //draw man head
         g.drawOval(570, 420, 110, 110);
+        //draw man face
+        //change the thickness of the line to less for more specific drawings
+        g2D.setStroke(faceLineThick);
+        //draw eyes using x lines
+        //left eye
+        g.drawLine(595, 470, 615, 450);
+        g.drawLine(595, 450, 615, 470);
+        //right eye
+        g.drawLine(635, 470, 655, 450);
+        g.drawLine(635, 450, 655, 470);
+        //draw sad mouth using arc
+        g.drawArc(603, 500, 50, 60, 40, 100);
+        //change back the line thickness to draw man's body
+        g2D.setStroke(manLineThick);
+        //draw body and legs using lines
+        //body
+        g.drawLine(625, 530, 625, 630);
+        //right leg
+        g.drawLine(625, 630, 660, 700);
+        //left leg
+        g.drawLine(625, 630, 590, 700);
+        //right arm
+        g.drawLine(625, 550, 640, 610);
+        //left arm
+        g.drawLine(625, 550, 610, 610);
         
         
         
@@ -125,6 +162,26 @@ public class hangingMan extends JComponent implements ActionListener {
     // This is run before the game loop begins!
     public void preSetup() {
         // Any of your pre setup before the loop starts should go here
+        
+        //set up an array of all the words to be used for the game
+        //create a check to make sure if there is an arror it will output it in the box of output
+        try {
+            in = new Scanner(new File("words"));
+        } catch (FileNotFoundException ex) {
+            
+            ex.printStackTrace();
+        }
+        //create variable to get the number of words that will go in that array
+        int numwords = in.nextInt();
+        in.nextLine(); // clear return
+        
+        //create THE array of words to use for the game
+        String[] gameWords = new String[numwords];
+        //create for loop to read in the words and put them in the array of words
+         for(int i = 0; i < numwords; i++){
+            String word = in.nextLine();
+            gameWords[i] = word;
+        }
 
     }
 
@@ -180,7 +237,6 @@ public class hangingMan extends JComponent implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        preSetup();
         gameLoop();
         repaint();
     }
