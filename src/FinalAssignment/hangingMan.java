@@ -56,6 +56,22 @@ public class hangingMan extends JComponent implements ActionListener {
     //create empty variable for scanner
     Scanner in = null;
     
+    //variable of color for backnound
+    Color backround = new Color(32, 228, 201);
+    //variable for color of hangman
+    Color Black = new Color(6, 6, 6);
+    
+    //create a empty variable for changing the color
+    Color change = null;
+    
+    //create boolean to control weather letter is wrong or right - set to 
+    boolean letter = true;
+    
+    //create integer for the random number of word in the array
+    //create the random number(between 0 and 120)
+    int randNum = (int)(Math.random()*(120));
+    
+    
     
 
 
@@ -104,14 +120,19 @@ public class hangingMan extends JComponent implements ActionListener {
 
         // GAME DRAWING GOES HERE
         //set color of backround
-        
+        g.setColor(backround);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+        //set color back to black
+        g.setColor(Color.BLACK);
         //set the custom font for tittle
         g.setFont(gameTitle);
         //write title of game in middle of sreen on top
         g.drawString("Hanging Man", 300, 50);
         //write instructions underneath title
         //draw the man in same color as backround
-        g.setColor(Color.black);
+        g.setColor(backround);
+        //change color to the emplty variable that will change according to the user's input
+        g.setColor(change);
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
@@ -153,7 +174,7 @@ public class hangingMan extends JComponent implements ActionListener {
         
         
         //set to draw number of lines as the word
-		
+        g.drawLine(100, 100, ERROR, ERROR);
 		
         // GAME DRAWING ENDS HERE
     }
@@ -182,12 +203,23 @@ public class hangingMan extends JComponent implements ActionListener {
             String word = in.nextLine();
             gameWords[i] = word;
         }
+         //make variable for lngtrh of word
+         int length = gameWords[randNum].length();
+        //output lines for letters corresponding to length of word
+        for (int i = 0; i < length; i++) {
+            
+            
+        }
 
     }
 
     // The main game loop
     // In here is where all the logic for my game will go
     public void gameLoop() {
+        //check lines
+        //check letter of user
+        //change color of each line if letter is wrong using bolean
+        
         
     }
 
