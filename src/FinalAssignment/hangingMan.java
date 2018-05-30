@@ -29,58 +29,56 @@ public class hangingMan extends JComponent implements ActionListener {
     // Height and Width of our game
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
-
     //Title of the window
     String title = "Hanging Man";
-
     // sets the framerate and delay for our game
     // this calculates the number of milliseconds per frame
     // you just need to select an approproate framerate
     int desiredFPS = 60;
     int desiredTime = Math.round((1000 / desiredFPS));
-    
     // timer used to run the game loop
     // this is what keeps our time running smoothly :)
     Timer gameTimer;
-
     // YOUR GAME VARIABLES WOULD GO HERE
     //custom create font of title of game
     Font gameTitle = new Font("Britannic Bold", Font.PLAIN, 42);
-    
     //set custom line thickness for hangman drawing
     BasicStroke manLineThick = new BasicStroke(5);
-    
     //set custom line thickness for the face
     BasicStroke faceLineThick = new BasicStroke(2);
-    
     //create empty variable for scanner
     Scanner in = null;
-    
     //variable of color for backnound
     Color backround = new Color(32, 228, 201);
     //variable for color of hangman
     Color Black = new Color(6, 6, 6);
-    
     //create a empty variable for changing the color
     Color change = null;
-    
     //create boolean to control weather letter is wrong or right - set to 
     boolean letter = true;
-    
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
-    int randNum = (int)(Math.random()*(120));
+    int randNum = (int) (Math.random() * (120));
+    //create variable for how wide the line for word is
+    int widthLine = 70;
+    //create variable for how long the space between 2 lines is
+    int spaceWidth = 30;
+    //create variable for y variable for allll lines
+    int y = 250;
+    //create the variable of legth of word equal 0
+    int length = 0;
+    //create empty array to be filled with words bank
+    String[] gameWords = null;
+    //create empty array to store x variables of all 1st dots of word lines
+    int[] X1s = null;
+    //create empty array to store x variables of all 2nd dots of word lines
+    int[] X2s = null;
     
-    
-    
-
 
     // GAME VARIABLES END HERE    
-
-    
     // Constructor to create the Frame and place the panel in
     // You will learn more about this in Grade 12 :)
-    public hangingMan(){
+    public hangingMan() {
         // creates a windows to show my game
         JFrame frame = new JFrame(title);
 
@@ -103,7 +101,7 @@ public class hangingMan extends JComponent implements ActionListener {
         this.addMouseWheelListener(m);
         this.addMouseListener(m);
         preSetup();
-        gameTimer = new Timer(desiredTime,this);
+        gameTimer = new Timer(desiredTime, this);
         gameTimer.setRepeats(true);
         gameTimer.start();
     }
@@ -114,7 +112,7 @@ public class hangingMan extends JComponent implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         //use adavnced graphics class
-        Graphics2D g2D = (Graphics2D)g;
+        Graphics2D g2D = (Graphics2D) g;
         // always clear the screen first!
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -136,8 +134,8 @@ public class hangingMan extends JComponent implements ActionListener {
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
-        g.drawLine(430, HEIGHT-70, WIDTH-80, HEIGHT-70);
-        g.drawLine(430, HEIGHT-70, 430, 370);
+        g.drawLine(430, HEIGHT - 70, WIDTH - 80, HEIGHT - 70);
+        g.drawLine(430, HEIGHT - 70, 430, 370);
         g.drawLine(430, 370, 625, 370);
         g.drawLine(625, 370, 625, 420);
         //draw man head
@@ -167,15 +165,19 @@ public class hangingMan extends JComponent implements ActionListener {
         g.drawLine(625, 550, 640, 610);
         //left arm
         g.drawLine(625, 550, 610, 610);
-        
-        
-        
-        
-        
-        
-        //set to draw number of lines as the word
-        g.drawLine(100, 100, ERROR, ERROR);
-		
+
+
+        //set colour back to black to draw the lines for letters
+        g.setColor(Color.BLACK);
+
+        //get length of the word
+        length = gameWords[randNum].length();
+        //get the array of 
+        //output lines for letters corresponding to length of word
+        for (int i = 0; i < length; i++) {
+            g.drawLine(X1s[i], y, X2s[i], y);
+        }
+
         // GAME DRAWING ENDS HERE
     }
 
@@ -183,44 +185,64 @@ public class hangingMan extends JComponent implements ActionListener {
     // This is run before the game loop begins!
     public void preSetup() {
         // Any of your pre setup before the loop starts should go here
-        
+
         //set up an array of all the words to be used for the game
         //create a check to make sure if there is an arror it will output it in the box of output
         try {
             in = new Scanner(new File("words"));
         } catch (FileNotFoundException ex) {
-            
+
             ex.printStackTrace();
         }
         //create variable to get the number of words that will go in that array
         int numwords = in.nextInt();
         in.nextLine(); // clear return
-        
+
         //create THE array of words to use for the game
-        String[] gameWords = new String[numwords];
+        gameWords = new String[numwords];
         //create for loop to read in the words and put them in the array of words
-         for(int i = 0; i < numwords; i++){
+        for (int i = 0; i < numwords; i++) {
             String word = in.nextLine();
             gameWords[i] = word;
         }
-         //make variable for lngtrh of word
-         int length = gameWords[randNum].length();
-        //output lines for letters corresponding to length of word
-        for (int i = 0; i < length; i++) {
-            
-            
-        }
+
 
     }
 
     // The main game loop
     // In here is where all the logic for my game will go
     public void gameLoop() {
-        //check lines
+        //create lines for amount of letters
+        createLinesOfWords();
         //check letter of user
         //change color of each line if letter is wrong using bolean
-        
-        
+        //show the user a button to restart game
+
+    }
+
+    private void createLinesOfWords() {
+        //get legth of the word
+        length = gameWords[randNum].length();
+        //create array for amount of letters in word
+        X1s = new int[length];
+        //create array for amount of letters in word
+        X2s = new int[length];
+
+        //save the first x spot in the X1s array as 50
+        X1s[0] = 50;
+        //save the first x spont in the X2s array as 50 plus the line's width
+        X2s[0] = 50 + widthLine;
+
+        //create array to store x varibles of each 1st dot of word line
+        for (int i = 1; i < length - 1; i++) {
+            //save the spot as the previous 1st dot x value + the width of the line and the width of the spot between lines
+            X1s[i] = X1s[i - 1] + widthLine + spaceWidth;
+        }
+        //create array to store x variables of each 2nd dot of word line
+        for (int i = 1; i < length - 1; i++) {
+            //save the spot of 2nd dot as the prevous spot + width of line+ width of spacve between lines
+            X2s[i] = X2s[i - 1] + widthLine + spaceWidth;
+        }
     }
 
     // Used to implement any of the Mouse Actions
@@ -229,25 +251,21 @@ public class hangingMan extends JComponent implements ActionListener {
         // if a mouse button has been pressed down
         @Override
         public void mousePressed(MouseEvent e) {
-
         }
 
         // if a mouse button has been released
         @Override
         public void mouseReleased(MouseEvent e) {
-
         }
 
         // if the scroll wheel has been moved
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
-
         }
 
         // if the mouse has moved positions
         @Override
         public void mouseMoved(MouseEvent e) {
-
         }
     }
 
@@ -257,13 +275,11 @@ public class hangingMan extends JComponent implements ActionListener {
         // if a key has been pressed down
         @Override
         public void keyPressed(KeyEvent e) {
-
         }
 
         // if a key has been released
         @Override
         public void keyReleased(KeyEvent e) {
-
         }
     }
 
@@ -281,4 +297,3 @@ public class hangingMan extends JComponent implements ActionListener {
         hangingMan game = new hangingMan();
     }
 }
-
