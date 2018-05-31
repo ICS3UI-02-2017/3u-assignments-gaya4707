@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -27,6 +28,7 @@ import javax.swing.Timer;
 public class hangingMan extends JComponent implements ActionListener {
 
     // Height and Width of our game
+    
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
     //Title of the window
@@ -52,17 +54,19 @@ public class hangingMan extends JComponent implements ActionListener {
     Color backround = new Color(32, 228, 201);
     //variable for color of hangman
     Color Black = new Color(6, 6, 6);
+    //create color of button
+    Color Purple = new Color(141, 83, 229 );
     //create a empty variable for changing the color
     Color change = null;
-    //create boolean to control weather letter is wrong or right - set to 
+    //create boolean to control weather letter is wrong or right - set to true 
     boolean letter = true;
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
     int randNum = (int) (Math.random() * (120));
     //create variable for how wide the line for word is
-    int widthLine = 70;
+    int widthLine = 50;
     //create variable for how long the space between 2 lines is
-    int spaceWidth = 30;
+    int spaceWidth = 15;
     //create variable for y variable for allll lines
     int y = 250;
     //create the variable of legth of word equal 0
@@ -70,15 +74,19 @@ public class hangingMan extends JComponent implements ActionListener {
     //create empty array to be filled with words bank
     String[] gameWords = null;
     //create empty array to store x variables of all 1st dots of word lines
-    int[] X1s = null;
+    int[] X1s = new int[0];
     //create empty array to store x variables of all 2nd dots of word lines
-    int[] X2s = null;
+    int[] X2s = new int[0];
+    
+    //create rectangle variables for button
+    Rectangle button = new Rectangle(220, 3*HEIGHT/4, 200, 50);
     
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
     // You will learn more about this in Grade 12 :)
     public hangingMan() {
+        preSetup();
         // creates a windows to show my game
         JFrame frame = new JFrame(title);
 
@@ -100,7 +108,7 @@ public class hangingMan extends JComponent implements ActionListener {
         this.addMouseMotionListener(m);
         this.addMouseWheelListener(m);
         this.addMouseListener(m);
-        preSetup();
+        
         gameTimer = new Timer(desiredTime, this);
         gameTimer.setRepeats(true);
         gameTimer.start();
@@ -172,11 +180,21 @@ public class hangingMan extends JComponent implements ActionListener {
 
         //get length of the word
         length = gameWords[randNum].length();
-        //get the array of 
+        //run the lines method to get the arrays of Xs for 1st points and 2nd points
+        createLinesOfWords();
         //output lines for letters corresponding to length of word
         for (int i = 0; i < length; i++) {
             g.drawLine(X1s[i], y, X2s[i], y);
         }
+        
+        //set colour to purple
+        g.setColor(Purple);
+        //pressent to the user a button ogf restarting the game
+        g.fillRect(button.x, button.y, button.width, button.height);
+        //set color back to black 
+        g.setColor(Color.BLACK);
+        g.drawString("Restart", 250, 635);
+        
 
         // GAME DRAWING ENDS HERE
     }
@@ -216,8 +234,10 @@ public class hangingMan extends JComponent implements ActionListener {
         createLinesOfWords();
         //check letter of user
         //change color of each line if letter is wrong using bolean
-        //show the user a button to restart game
-
+        
+        System.out.println(randNum +": "+gameWords[randNum]);
+        //if restart button clicked restart game
+        buttonpressed();
     }
 
     private void createLinesOfWords() {
@@ -227,22 +247,27 @@ public class hangingMan extends JComponent implements ActionListener {
         X1s = new int[length];
         //create array for amount of letters in word
         X2s = new int[length];
-
+        
         //save the first x spot in the X1s array as 50
-        X1s[0] = 50;
+        X1s[0] = 100;
         //save the first x spont in the X2s array as 50 plus the line's width
-        X2s[0] = 50 + widthLine;
+        X2s[0] = widthLine+100;
+        
 
         //create array to store x varibles of each 1st dot of word line
-        for (int i = 1; i < length - 1; i++) {
+        for (int i = 1; i < length; i++) {
             //save the spot as the previous 1st dot x value + the width of the line and the width of the spot between lines
             X1s[i] = X1s[i - 1] + widthLine + spaceWidth;
         }
         //create array to store x variables of each 2nd dot of word line
-        for (int i = 1; i < length - 1; i++) {
+        for (int i = 1; i < length; i++) {
             //save the spot of 2nd dot as the prevous spot + width of line+ width of spacve between lines
             X2s[i] = X2s[i - 1] + widthLine + spaceWidth;
         }
+    }
+
+    private void buttonpressed() {
+        //if player pressed button -restart game
     }
 
     // Used to implement any of the Mouse Actions
