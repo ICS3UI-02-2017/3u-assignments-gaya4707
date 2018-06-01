@@ -36,7 +36,7 @@ public class hangingMan extends JComponent implements ActionListener {
     // sets the framerate and delay for our game
     // this calculates the number of milliseconds per frame
     // you just need to select an approproate framerate
-    int desiredFPS = 60;
+    int desiredFPS = 20;
     int desiredTime = Math.round((1000 / desiredFPS));
     // timer used to run the game loop
     // this is what keeps our time running smoothly :)
@@ -59,7 +59,7 @@ public class hangingMan extends JComponent implements ActionListener {
     //create a empty variable for changing the color
     Color change = null;
     //create boolean to control weather letter is wrong or right - set to true 
-    boolean letter = true;
+    boolean letterCheck = true;
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
     int randNum = (int) (Math.random() * (120));
@@ -80,6 +80,16 @@ public class hangingMan extends JComponent implements ActionListener {
     
     //create rectangle variables for button
     Rectangle button = new Rectangle(220, 3*HEIGHT/4, 200, 50);
+    //integer to get the x and y of user when mouse pressed
+    int Xpressed = 0;
+    int Ypressed = 0;
+    //create character that is the letter the user presed
+    char letter = 0;
+    
+    //create string to use to manipulate the unknown word
+    String manString = "";
+    //create the integer who will be filled by the spot of the right letter in the word
+    int letterSpot = 0;
     
 
     // GAME VARIABLES END HERE    
@@ -233,6 +243,7 @@ public class hangingMan extends JComponent implements ActionListener {
         //create lines for amount of letters
         createLinesOfWords();
         //check letter of user
+        letterSpot = checkUserInput(letter);
         //change color of each line if letter is wrong using bolean
         
         System.out.println(randNum +": "+gameWords[randNum]);
@@ -268,6 +279,39 @@ public class hangingMan extends JComponent implements ActionListener {
 
     private void buttonpressed() {
         //if player pressed button -restart game
+        if(button.contains(Xpressed, Ypressed)){
+        //create new random number
+        randNum = (int) (Math.random() * (120));
+        //restart game
+        preSetup();
+           
+    }
+        
+    
+    }
+
+    private int checkUserInput(char l) {
+        //set the word being manipulated to the word in the renandom spot in words array
+        manString = gameWords[randNum];
+        
+        //go throughthe string and check if 
+        for (int i = 0; i < length; i++) {
+            //if the letter is right
+            if (manString.charAt(i)== l){
+            //set the spot of the character to the spot of the letter inthe unknown word
+            letterSpot = i;    
+            }
+            //if letter is wrong
+            else if(manString.charAt(i)!= l){
+            //set the spot of letter to -1
+            letterSpot = -1;
+            //also set the boolean of the letter check to false
+            letterCheck = false;
+            
+            }
+        }
+        //return the boolean
+        return letterSpot;
     }
 
     // Used to implement any of the Mouse Actions
@@ -276,11 +320,17 @@ public class hangingMan extends JComponent implements ActionListener {
         // if a mouse button has been pressed down
         @Override
         public void mousePressed(MouseEvent e) {
+            //get x and y coordinayes to see if button restart preesed
+            Xpressed = e.getX();
+            Ypressed = e.getY();
         }
 
         // if a mouse button has been released
         @Override
         public void mouseReleased(MouseEvent e) {
+            //once the user lets go of the mouse - set x and y coodinastes back to 0
+            Xpressed = 0;
+            Ypressed = 0;
         }
 
         // if the scroll wheel has been moved
@@ -300,6 +350,8 @@ public class hangingMan extends JComponent implements ActionListener {
         // if a key has been pressed down
         @Override
         public void keyPressed(KeyEvent e) {
+            //get the letter pressed by user
+            letter = e.getKeyChar();
         }
 
         // if a key has been released
