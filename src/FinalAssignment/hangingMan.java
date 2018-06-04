@@ -79,6 +79,8 @@ public class hangingMan extends JComponent implements ActionListener {
     int[] X1s = new int[0];
     //create empty array to store x variables of all 2nd dots of word lines
     int[] X2s = new int[0];
+    //create emply array to store the word characters in it
+    char[] word = new char[0];
     
     //create rectangle variables for button
     Rectangle button = new Rectangle(220, 3*HEIGHT/4, 200, 50);
@@ -308,8 +310,11 @@ public class hangingMan extends JComponent implements ActionListener {
     }
 
     private int checkUserInput(char l) {
-        //set the word being manipulated to the word in the renandom spot in words array
-        manString = gameWords[randNum];
+        //fill the charachter array
+        for (int i = 0; i < length; i++) {
+            word[i] = gameWords[randNum].charAt(i);
+        }
+        jhdgryuawef3//problem is here
         
         //go throughthe string and check if the input is part of the word
         for (int i = 0; i < length; i++) {
