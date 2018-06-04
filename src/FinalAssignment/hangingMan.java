@@ -44,6 +44,8 @@ public class hangingMan extends JComponent implements ActionListener {
     // YOUR GAME VARIABLES WOULD GO HERE
     //custom create font of title of game
     Font gameTitle = new Font("Britannic Bold", Font.PLAIN, 42);
+    //custom create fornt of unknown word
+    Font letterFont = new Font ("Arial Rounded MT Bold", Font.PLAIN, 42);
     //set custom line thickness for hangman drawing
     BasicStroke manLineThick = new BasicStroke(5);
     //set custom line thickness for the face
@@ -58,7 +60,7 @@ public class hangingMan extends JComponent implements ActionListener {
     Color Purple = new Color(141, 83, 229 );
     //create a empty variable for changing the color
     Color change = null;
-    //create boolean to control weather letter is wrong or right - set to true 
+    //create empty boolean to control weather letter is wrong or right  
     boolean letterCheck = true;
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
@@ -88,9 +90,13 @@ public class hangingMan extends JComponent implements ActionListener {
     
     //create string to use to manipulate the unknown word
     String manString = "";
-    //create the integer who will be filled by the spot of the right letter in the word
-    int letterSpot = 0;
-    
+    //create the integer who will be filled by the spot of the right letter in the word-set to wrong
+    int letterSpot = -1;
+    //create an integer that will be the spot of the letter to be output on the screen relative to the distance from the left depending on the spot of that letter in the word
+    //make it equal to the x point of the distance to the first line
+    int wordDistance = 100;
+    //create a char to save the right letter
+    char THEletter = 0;
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -135,10 +141,10 @@ public class hangingMan extends JComponent implements ActionListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
-        //set color of backround
+        //set colour of backround
         g.setColor(backround);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        //set color back to black
+        //set colour back to black
         g.setColor(Color.BLACK);
         //set the custom font for tittle
         g.setFont(gameTitle);
@@ -152,6 +158,7 @@ public class hangingMan extends JComponent implements ActionListener {
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
+        
         g.drawLine(430, HEIGHT - 70, WIDTH - 80, HEIGHT - 70);
         g.drawLine(430, HEIGHT - 70, 430, 370);
         g.drawLine(430, 370, 625, 370);
@@ -205,6 +212,14 @@ public class hangingMan extends JComponent implements ActionListener {
         g.setColor(Color.BLACK);
         g.drawString("Restart", 250, 635);
         
+        //if letter is right draw the letter
+        if(letterSpot>(-1)){
+            //change to fornt of unknown word
+            g.setFont(letterFont);
+            //draw the letter
+            g.drawString(" "+ THEletter ,wordDistance, (y-10));
+        }
+        
 
         // GAME DRAWING ENDS HERE
     }
@@ -245,6 +260,8 @@ public class hangingMan extends JComponent implements ActionListener {
         //check letter of user
         letterSpot = checkUserInput(letter);
         //change color of each line if letter is wrong using bolean
+        //if letter is right - output the matching letter on the line
+        correctLetter(letter);
         
         System.out.println(randNum +": "+gameWords[randNum]);
         //if restart button clicked restart game
@@ -294,12 +311,14 @@ public class hangingMan extends JComponent implements ActionListener {
         //set the word being manipulated to the word in the renandom spot in words array
         manString = gameWords[randNum];
         
-        //go throughthe string and check if 
+        //go throughthe string and check if the input is part of the word
         for (int i = 0; i < length; i++) {
             //if the letter is right
             if (manString.charAt(i)== l){
             //set the spot of the character to the spot of the letter inthe unknown word
-            letterSpot = i;    
+            letterSpot = i;
+            //set the boolean to true
+            letterCheck = true;
             }
             //if letter is wrong
             else if(manString.charAt(i)!= l){
@@ -313,6 +332,29 @@ public class hangingMan extends JComponent implements ActionListener {
         //return the boolean
         return letterSpot;
     }
+
+
+    private void correctLetter(char letter) {
+        //if the letter is correct
+        if (letterCheck==true){
+            //figure out where the distance to output letter depending where it is in the word
+            for (int i = 0; i < letter+1; i++) {
+                //add the amount of lines distance to the x point of first line
+                //and the spaces btw the lines
+                wordDistance = wordDistance + widthLine + spaceWidth;
+            }
+            //add 7 to the letter distance to centralize the letter on the line
+            wordDistance = wordDistance + 7;
+            
+            //save the correct leter 
+            THEletter = manString.charAt(letter);
+            
+            
+        }
+        
+    }
+
+
 
     // Used to implement any of the Mouse Actions
     private class Mouse extends MouseAdapter {
