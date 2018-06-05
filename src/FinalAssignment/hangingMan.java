@@ -28,7 +28,6 @@ import javax.swing.Timer;
 public class hangingMan extends JComponent implements ActionListener {
 
     // Height and Width of our game
-    
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
     //Title of the window
@@ -45,7 +44,7 @@ public class hangingMan extends JComponent implements ActionListener {
     //custom create font of title of game
     Font gameTitle = new Font("Britannic Bold", Font.PLAIN, 42);
     //custom create fornt of unknown word
-    Font letterFont = new Font ("Arial Rounded MT Bold", Font.PLAIN, 42);
+    Font letterFont = new Font("Arial Rounded MT Bold", Font.PLAIN, 42);
     //set custom line thickness for hangman drawing
     BasicStroke manLineThick = new BasicStroke(5);
     //set custom line thickness for the face
@@ -57,11 +56,11 @@ public class hangingMan extends JComponent implements ActionListener {
     //variable for color of hangman
     Color Black = new Color(6, 6, 6);
     //create color of button
-    Color Purple = new Color(141, 83, 229 );
+    Color Purple = new Color(141, 83, 229);
     //create a empty variable for changing the color
     Color change = null;
-    //create empty boolean to control weather letter is wrong or right  
-    boolean letterCheck = true;
+    //create empty boolean to control weather letter is wrong or right -set to wrong 
+    boolean letterCheck = false;
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
     int randNum = (int) (Math.random() * (120));
@@ -80,23 +79,25 @@ public class hangingMan extends JComponent implements ActionListener {
     //create empty array to store x variables of all 2nd dots of word lines
     int[] X2s = new int[0];
     //create emply array to store the word characters in it
-    char[] word = new char[0];
-    
+    char[] word = new char[length];
+    //create blank space that will be converted into the line 
+    char blankSpace = '~';
+    //create a variable for the key code to read the letters
+    double keyCode = 0;
+
+    public hangingMan(Timer gameTimer) {
+        this.gameTimer = gameTimer;
+    }
     //create rectangle variables for button
-    Rectangle button = new Rectangle(220, 3*HEIGHT/4, 200, 50);
+    Rectangle button = new Rectangle(220, 3 * HEIGHT / 4, 200, 50);
     //integer to get the x and y of user when mouse pressed
     int Xpressed = 0;
     int Ypressed = 0;
     //create character that is the letter the user presed
     char letter = 0;
-    
     //create string to use to manipulate the unknown word
     String manString = "";
-    //create the integer who will be filled by the spot of the right letter in the word-set to wrong
-    int letterSpot = -1;
-    //create an integer that will be the spot of the letter to be output on the screen relative to the distance from the left depending on the spot of that letter in the word
-    //make it equal to the x point of the distance to the first line
-    int wordDistance = 100;
+    
     //create a char to save the right letter
     char THEletter = 0;
 
@@ -126,7 +127,7 @@ public class hangingMan extends JComponent implements ActionListener {
         this.addMouseMotionListener(m);
         this.addMouseWheelListener(m);
         this.addMouseListener(m);
-        
+
         gameTimer = new Timer(desiredTime, this);
         gameTimer.setRepeats(true);
         gameTimer.start();
@@ -160,7 +161,7 @@ public class hangingMan extends JComponent implements ActionListener {
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
-        
+
         g.drawLine(430, HEIGHT - 70, WIDTH - 80, HEIGHT - 70);
         g.drawLine(430, HEIGHT - 70, 430, 370);
         g.drawLine(430, 370, 625, 370);
@@ -202,10 +203,22 @@ public class hangingMan extends JComponent implements ActionListener {
         //run the lines method to get the arrays of Xs for 1st points and 2nd points
         createLinesOfWords();
         //output lines for letters corresponding to length of word
+
+        //go through the unknown word
         for (int i = 0; i < length; i++) {
-            g.drawLine(X1s[i], y, X2s[i], y);
+            //if the charachter is unknown - draw the line
+            if (word[i] == blankSpace) {
+                g.drawLine(X1s[i], y, X2s[i], y);
+            }
+            //if letter is right draw the letter
+            if(word[i] == letter && letterCheck ==true){
+                g.drawString(""+letter, (X1s[i]+7), y);
+                System.out.println(""+ letter);
+            }
+
         }
         
+
         //set colour to purple
         g.setColor(Purple);
         //pressent to the user a button ogf restarting the game
@@ -213,15 +226,10 @@ public class hangingMan extends JComponent implements ActionListener {
         //set color back to black 
         g.setColor(Color.BLACK);
         g.drawString("Restart", 250, 635);
+
         
-        //if letter is right draw the letter
-        if(letterSpot>(-1)){
-            //change to fornt of unknown word
-            g.setFont(letterFont);
-            //draw the letter
-            g.drawString(" "+ THEletter ,wordDistance, (y-10));
-        }
-        
+      
+
 
         // GAME DRAWING ENDS HERE
     }
@@ -251,40 +259,55 @@ public class hangingMan extends JComponent implements ActionListener {
             gameWords[i] = word;
         }
 
-
+        //create array of charachters for the unknown word
+        arreyOfCharcters();
     }
 
     // The main game loop
     // In here is where all the logic for my game will go
     public void gameLoop() {
+        
         //create lines for amount of letters
         createLinesOfWords();
-        //check letter of user
-        letterSpot = checkUserInput(letter);
-        //change color of each line if letter is wrong using bolean
-        //if letter is right - output the matching letter on the line
-        correctLetter(letter);
+
+        //read in the letter pressed to check it
+        checkInput();
         
-        System.out.println(randNum +": "+gameWords[randNum]);
+        
+        System.out.println(randNum + ": " + gameWords[randNum]);
+        
         //if restart button clicked restart game
         buttonpressed();
     }
 
-    private void createLinesOfWords() {
+    private void arreyOfCharcters() {
         //get legth of the word
         length = gameWords[randNum].length();
+
+        //create the array the size of  the word
+        word = new char[length];
+
+        //fill that array in ~ 
+        for (int i = 0; i < length; i++) {
+            word[i] = blankSpace;
+        }
+    }
+
+    private void createLinesOfWords() {
+
         //create array for amount of letters in word
         X1s = new int[length];
         //create array for amount of letters in word
         X2s = new int[length];
-        
+
         //save the first x spot in the X1s array as 50
         X1s[0] = 100;
         //save the first x spont in the X2s array as 50 plus the line's width
-        X2s[0] = widthLine+100;
-        
+        X2s[0] = widthLine + 100;
 
-        //create array to store x varibles of each 1st dot of word line
+
+
+        //go through the array of chatacters
         for (int i = 1; i < length; i++) {
             //save the spot as the previous 1st dot x value + the width of the line and the width of the spot between lines
             X1s[i] = X1s[i - 1] + widthLine + spaceWidth;
@@ -295,71 +318,34 @@ public class hangingMan extends JComponent implements ActionListener {
             X2s[i] = X2s[i - 1] + widthLine + spaceWidth;
         }
     }
+    
+    private void checkInput() {
+        //go through the word array of charachters
+        for (int i = 0; i < length; i++) {
+            if(word[i]==letter){
+                word[i] = letter;
+                letterCheck = true;
+            }else if(word[i]!= letter){
+                letterCheck = false;
+            }
+        }
+        
+    }
 
     private void buttonpressed() {
         //if player pressed button -restart game
-        if(button.contains(Xpressed, Ypressed)){
-        //create new random number
-        randNum = (int) (Math.random() * (120));
-        //restart game
-        preSetup();
-           
+        if (button.contains(Xpressed, Ypressed)) {
+            //create new random number
+            randNum = (int) (Math.random() * (120));
+            //restart game
+            preSetup();
+
+        }
+
+
     }
-        
+
     
-    }
-
-    private int checkUserInput(char l) {
-        //fill the charachter array
-        for (int i = 0; i < length; i++) {
-            word[i] = gameWords[randNum].charAt(i);
-        }
-        jhdgryuawef3//problem is here
-        
-        //go throughthe string and check if the input is part of the word
-        for (int i = 0; i < length; i++) {
-            //if the letter is right
-            if (manString.charAt(i)== l){
-            //set the spot of the character to the spot of the letter inthe unknown word
-            letterSpot = i;
-            //set the boolean to true
-            letterCheck = true;
-            }
-            //if letter is wrong
-            else if(manString.charAt(i)!= l){
-            //set the spot of letter to -1
-            letterSpot = -1;
-            //also set the boolean of the letter check to false
-            letterCheck = false;
-            
-            }
-        }
-        //return the boolean
-        return letterSpot;
-    }
-
-
-    private void correctLetter(char letter) {
-        //if the letter is correct
-        if (letterCheck==true){
-            //figure out where the distance to output letter depending where it is in the word
-            for (int i = 0; i < letter+1; i++) {
-                //add the amount of lines distance to the x point of first line
-                //and the spaces btw the lines
-                wordDistance = wordDistance + widthLine + spaceWidth;
-            }
-            //add 7 to the letter distance to centralize the letter on the line
-            wordDistance = wordDistance + 7;
-            
-            //save the correct leter 
-            THEletter = manString.charAt(letter);
-            
-            
-        }
-        
-    }
-
-
 
     // Used to implement any of the Mouse Actions
     private class Mouse extends MouseAdapter {
@@ -398,7 +384,39 @@ public class hangingMan extends JComponent implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             //get the letter pressed by user
-            letter = e.getKeyChar();
+            keyCode = e.getKeyChar();
+            //translate the key code into letters:
+            if(keyCode == KeyEvent.VK_Z){
+                letter = 'z';
+            }
+             if (keyCode == KeyEvent.VK_X){
+                letter = 'x';
+            }
+             if (keyCode == KeyEvent.VK_C){
+                letter = 'c';
+            }
+             if (keyCode == KeyEvent.VK_V){
+                letter = 'v';
+            }
+             if (keyCode == KeyEvent.VK_B){
+                letter = 'b';
+            }
+             if (keyCode == KeyEvent.VK_N){
+                letter = 'n';
+            }
+             if (keyCode == KeyEvent.VK_M){
+                letter = 'm';
+            }
+             if (keyCode == KeyEvent.VK_A){
+                letter = 'a';
+            }
+             if (keyCode == KeyEvent.VK_S){
+                letter = 's';
+            }
+             if (keyCode == KeyEvent.VK_D){
+                letter = 'd';
+            }
+                
         }
 
         // if a key has been released
