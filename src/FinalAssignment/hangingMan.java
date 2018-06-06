@@ -59,8 +59,6 @@ public class hangingMan extends JComponent implements ActionListener {
     Color Purple = new Color(141, 83, 229);
     //create a empty variable for changing the color
     Color change = null;
-    //create empty boolean to control weather letter is wrong or right -set to wrong 
-    boolean letterCheck = false;
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
     int randNum = (int) (Math.random() * (120));
@@ -84,6 +82,9 @@ public class hangingMan extends JComponent implements ActionListener {
     char blankSpace = '~';
     //create a variable for the key code to read the letters
     double keyCode = 0;
+    
+    //create boolean to decide if a line needed to be drawn- set to false
+    boolean drawStick = false;
 
     public hangingMan(Timer gameTimer) {
         this.gameTimer = gameTimer;
@@ -95,11 +96,11 @@ public class hangingMan extends JComponent implements ActionListener {
     int Ypressed = 0;
     //create character that is the letter the user presed
     char letter = 0;
-    //create string to use to manipulate the unknown word
+    //create string to store the unknown word
     String manString = "";
     
-    //create a char to save the right letter
-    char THEletter = 0;
+    
+    
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -156,13 +157,19 @@ public class hangingMan extends JComponent implements ActionListener {
         //write instructions underneath title
         //draw the man in same color as backround
         g.setColor(backround);
+        //call method to check if the letter is right
+        drawManStick();
         //change color to the emplty variable that will change according to the user's input
         g.setColor(change);
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
-
+        
         g.drawLine(430, HEIGHT - 70, WIDTH - 80, HEIGHT - 70);
+        //turn to backround color again and change
+        g.setColor(backround);
+        g.setColor(change);
+        
         g.drawLine(430, HEIGHT - 70, 430, 370);
         g.drawLine(430, 370, 625, 370);
         g.drawLine(625, 370, 625, 420);
@@ -209,15 +216,12 @@ public class hangingMan extends JComponent implements ActionListener {
             //if the charachter is unknown - draw the line
             if (word[i] == blankSpace) {
                 g.drawLine(X1s[i], y, X2s[i], y);
-            }
+            }else{
             //if letter is right draw the letter
-            if(word[i] == letter && letterCheck ==true){
-                g.drawString(""+letter, (X1s[i]+7), y);
-                System.out.println(""+ letter);
+                g.drawString(""+word[i], (X1s[i]+7), y);
             }
 
         }
-        
 
         //set colour to purple
         g.setColor(Purple);
@@ -261,6 +265,11 @@ public class hangingMan extends JComponent implements ActionListener {
 
         //create array of charachters for the unknown word
         arreyOfCharcters();
+        System.out.println(randNum + ": " + gameWords[randNum]);
+        //set the unknown word equal manString
+        manString = gameWords[randNum];
+        
+        //create an array of strings to contain the color
     }
 
     // The main game loop
@@ -274,7 +283,7 @@ public class hangingMan extends JComponent implements ActionListener {
         checkInput();
         
         
-        System.out.println(randNum + ": " + gameWords[randNum]);
+        
         
         //if restart button clicked restart game
         buttonpressed();
@@ -322,14 +331,25 @@ public class hangingMan extends JComponent implements ActionListener {
     private void checkInput() {
         //go through the word array of charachters
         for (int i = 0; i < length; i++) {
-            if(word[i]==letter){
+            //if the letter inputed by user equals the char in the unknown spot
+            if(manString.charAt(i)==letter){
+                //then the char in the word array is equal the letter
                 word[i] = letter;
-                letterCheck = true;
-            }else if(word[i]!= letter){
-                letterCheck = false;
+             //if the letter is wrong and the word is empty
+            }else if(manString.charAt(i)!=letter && word[i]!='~'){
+                //set the boolean of draw man line to true
+                drawStick = true;
+                //gotta 0 it out
             }
         }
         
+    }
+    
+     private void drawManStick() {
+         //go though the 
+        if(drawStick == true){
+            change = Black;
+        }
     }
 
     private void buttonpressed() {
@@ -337,6 +357,8 @@ public class hangingMan extends JComponent implements ActionListener {
         if (button.contains(Xpressed, Ypressed)) {
             //create new random number
             randNum = (int) (Math.random() * (120));
+            //reset the letter pressed to be 0 again
+            letter = 0;
             //restart game
             preSetup();
 
@@ -344,6 +366,8 @@ public class hangingMan extends JComponent implements ActionListener {
 
 
     }
+
+   
 
     
 
@@ -384,38 +408,9 @@ public class hangingMan extends JComponent implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             //get the letter pressed by user
-            keyCode = e.getKeyChar();
-            //translate the key code into letters:
-            if(keyCode == KeyEvent.VK_Z){
-                letter = 'z';
-            }
-             if (keyCode == KeyEvent.VK_X){
-                letter = 'x';
-            }
-             if (keyCode == KeyEvent.VK_C){
-                letter = 'c';
-            }
-             if (keyCode == KeyEvent.VK_V){
-                letter = 'v';
-            }
-             if (keyCode == KeyEvent.VK_B){
-                letter = 'b';
-            }
-             if (keyCode == KeyEvent.VK_N){
-                letter = 'n';
-            }
-             if (keyCode == KeyEvent.VK_M){
-                letter = 'm';
-            }
-             if (keyCode == KeyEvent.VK_A){
-                letter = 'a';
-            }
-             if (keyCode == KeyEvent.VK_S){
-                letter = 's';
-            }
-             if (keyCode == KeyEvent.VK_D){
-                letter = 'd';
-            }
+            letter = e.getKeyChar();
+            
+            System.out.println(letter+"");
                 
         }
 
