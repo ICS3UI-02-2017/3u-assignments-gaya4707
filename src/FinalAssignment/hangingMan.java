@@ -35,7 +35,7 @@ public class hangingMan extends JComponent implements ActionListener {
     // sets the framerate and delay for our game
     // this calculates the number of milliseconds per frame
     // you just need to select an approproate framerate
-    int desiredFPS = 20;
+    int desiredFPS = 10;
     int desiredTime = Math.round((1000 / desiredFPS));
     // timer used to run the game loop
     // this is what keeps our time running smoothly :)
@@ -91,10 +91,12 @@ public class hangingMan extends JComponent implements ActionListener {
     //create blank space that will be converted into the line 
     char blankSpace = '~';
 
-    boolean[] colorChange = new boolean[11];
+    //create aray for 
+    Color[] Change = new Color[11];
 
     //create boolean to decide if a line needed to be drawn- set to false
     boolean drawStick = false;
+    
 
     public hangingMan(Timer gameTimer) {
         this.gameTimer = gameTimer;
@@ -167,30 +169,26 @@ public class hangingMan extends JComponent implements ActionListener {
         //call method to check if the letter is right
         drawManStick();
         //change color to the emplty variable that will change according to the user's input
-        g.setColor(change);
+        g.setColor(Change[0]);
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
 
         g.drawLine(430, HEIGHT - 70, WIDTH - 80, HEIGHT - 70);
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change1);
+        //turn colour to change 1
+        g.setColor(Change[1]);
 
         g.drawLine(430, HEIGHT - 70, 430, 370);
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change2);
+        //turn colour to change 2
+        g.setColor(Change[2]);
 
         g.drawLine(430, 370, 625, 370);
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change3);
+        //turn colour to change 3
+        g.setColor(Change[3]);
 
         g.drawLine(625, 370, 625, 420);
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change4);
+        //turn colour to change 4
+        g.setColor(Change[4]);
 
         //draw man head
         g.drawOval(570, 420, 110, 110);
@@ -205,45 +203,39 @@ public class hangingMan extends JComponent implements ActionListener {
         g.drawLine(635, 470, 655, 450);
         g.drawLine(635, 450, 655, 470);
         //draw sad mouth using arc
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change5);
+        //turn colour to change 5
+        g.setColor(Change[5]);
 
         g.drawArc(603, 500, 50, 60, 40, 100);
         //change back the line thickness to draw man's body
         g2D.setStroke(manLineThick);
         //draw body and legs using lines
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change6);
+        //turn colour to change 6
+        g.setColor(Change[6]);
 
         //body
         g.drawLine(625, 530, 625, 630);
 
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change7);
+        //turn colour to change 7
+        g.setColor(Change[7]);
 
         //right leg
         g.drawLine(625, 630, 660, 700);
 
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change8);
+        //turn colour to change 8
+        g.setColor(Change[8]);
 
         //left leg
         g.drawLine(625, 630, 590, 700);
 
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change9);
+        //turn colour to change 9
+        g.setColor(Change[9]);
 
         //right arm
         g.drawLine(625, 550, 640, 610);
 
-        //turn colour to backround color again and to change
-        g.setColor(backround);
-        g.setColor(change10);
+        //turn colour to change 10
+        g.setColor(Change[10]);
 
         //left arm
         g.drawLine(625, 550, 610, 610);
@@ -313,7 +305,7 @@ public class hangingMan extends JComponent implements ActionListener {
 
         //create an array of strings to contain the color
         for (int i = 0; i < 11; i++) {
-            colorChange[i] = false;
+            Change[i] = backround;
         }
     }
 
@@ -400,48 +392,17 @@ public class hangingMan extends JComponent implements ActionListener {
             //go through color change array
             for (int i = 0; i < 11; i++) {
                 //check to see where to update colour change
-                if (colorChange[i] == false) {
+                if (Change[i] == backround) {
                     //change first false in array to true
-                    colorChange[i] = true;
+                    Change[i] = Black;
+                    //resest the boolean of draw stick
+                    drawStick = false;
                     //leave the loop
                     break;
                 }
             }
         }
-        //check boolean if letter is wrong and set empty color to black if true 
-        if (colorChange[0] == true) {
-            change = Black;
-        }
-        if (colorChange[1] == true) {
-            change1 = Black;
-        }
-        if (colorChange[2] == true) {
-            change2 = Black;
-        }
-        if (colorChange[3] == true) {
-            change3 = Black;
-        }
-        if (colorChange[4] == true) {
-            change4 = Black;
-        }
-        if (colorChange[5] == true) {
-            change5 = Black;
-        }
-        if (colorChange[6] == true) {
-            change6 = Black;
-        }
-        if (colorChange[7] == true) {
-            change7 = Black;
-        }
-        if (colorChange[8] == true) {
-            change8 = Black;
-        }
-        if (colorChange[9] == true) {
-            change9 = Black;
-        }
-        if (colorChange[10] == true) {
-            change10 = Black;
-        }
+        
         
 
     }
@@ -451,7 +412,7 @@ public class hangingMan extends JComponent implements ActionListener {
         if (button.contains(Xpressed, Ypressed)) {
             //create new random number
             randNum = (int) (Math.random() * (120));
-            //reset the letter pressed to be 0 again
+            //reset the letter pressed to be an empty space again
             letter = '~';
             //restart game
             preSetup();
