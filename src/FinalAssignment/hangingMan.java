@@ -58,17 +58,17 @@ public class hangingMan extends JComponent implements ActionListener {
     //create color of button
     Color Purple = new Color(141, 83, 229);
     //create a empty variables for changing the color
-    Color change = null;
-    Color change1 = null;
-    Color change2 = null;
-    Color change3 = null;
-    Color change4 = null;
-    Color change5 = null;
-    Color change6 = null;
-    Color change7 = null;
-    Color change8 = null;
-    Color change9 = null;
-    Color change10 = null;
+    Color change = backround;
+    Color change1 = backround;
+    Color change2 = backround;
+    Color change3 = backround;
+    Color change4 = backround;
+    Color change5 = backround;
+    Color change6 = backround;
+    Color change7 = backround;
+    Color change8 = backround;
+    Color change9 = backround;
+    Color change10 = backround;
     //create integer for the random number of word in the array
     //create the random number(between 0 and 120)
     int randNum = (int) (Math.random() * (120));
@@ -90,12 +90,11 @@ public class hangingMan extends JComponent implements ActionListener {
     char[] word = new char[length];
     //create blank space that will be converted into the line 
     char blankSpace = '~';
-    
-    
+
+    boolean[] colorChange = new boolean[11];
+
     //create boolean to decide if a line needed to be drawn- set to false
     boolean drawStick = false;
-    //create a string to check if input is valid
-    String ABC = "abcdefghijklmnopqrstuvwxyz";
 
     public hangingMan(Timer gameTimer) {
         this.gameTimer = gameTimer;
@@ -109,9 +108,6 @@ public class hangingMan extends JComponent implements ActionListener {
     char letter = '~';
     //create string to store the unknown word
     String manString = "";
-    
-    
-    
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -175,27 +171,27 @@ public class hangingMan extends JComponent implements ActionListener {
         //set custom thickness of drawing
         g2D.setStroke(manLineThick);
         //draw the platform of man in bottom right cornor
-        
+
         g.drawLine(430, HEIGHT - 70, WIDTH - 80, HEIGHT - 70);
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change1);
-        
+
         g.drawLine(430, HEIGHT - 70, 430, 370);
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change2);
-        
+
         g.drawLine(430, 370, 625, 370);
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change3);
-        
+
         g.drawLine(625, 370, 625, 420);
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change4);
-        
+
         //draw man head
         g.drawOval(570, 420, 110, 110);
         //draw man face
@@ -212,7 +208,7 @@ public class hangingMan extends JComponent implements ActionListener {
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change5);
-        
+
         g.drawArc(603, 500, 50, 60, 40, 100);
         //change back the line thickness to draw man's body
         g2D.setStroke(manLineThick);
@@ -220,38 +216,37 @@ public class hangingMan extends JComponent implements ActionListener {
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change6);
-        
+
         //body
         g.drawLine(625, 530, 625, 630);
-        
-       //turn colour to backround color again and to change
+
+        //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change7);
-        
+
         //right leg
         g.drawLine(625, 630, 660, 700);
-        
+
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change8);
-        
+
         //left leg
         g.drawLine(625, 630, 590, 700);
-        
+
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change9);
-        
+
         //right arm
         g.drawLine(625, 550, 640, 610);
-        
+
         //turn colour to backround color again and to change
         g.setColor(backround);
         g.setColor(change10);
-        
+
         //left arm
         g.drawLine(625, 550, 610, 610);
-
 
         //set colour back to black to draw the lines for letters
         g.setColor(Color.BLACK);
@@ -267,9 +262,9 @@ public class hangingMan extends JComponent implements ActionListener {
             //if the charachter is unknown - draw the line
             if (word[i] == blankSpace) {
                 g.drawLine(X1s[i], y, X2s[i], y);
-            }else{
-            //if letter is right draw the letter
-                g.drawString(""+word[i], (X1s[i]+7), y);
+            } else {
+                //if letter is right draw the letter
+                g.drawString("" + word[i], (X1s[i] + 7), y);
             }
 
         }
@@ -281,10 +276,6 @@ public class hangingMan extends JComponent implements ActionListener {
         //set color back to black 
         g.setColor(Color.BLACK);
         g.drawString("Restart", 250, 635);
-
-        
-      
-
 
         // GAME DRAWING ENDS HERE
     }
@@ -319,23 +310,23 @@ public class hangingMan extends JComponent implements ActionListener {
         System.out.println(randNum + ": " + gameWords[randNum]);
         //set the unknown word equal manString
         manString = gameWords[randNum];
-        
+
         //create an array of strings to contain the color
+        for (int i = 0; i < 11; i++) {
+            colorChange[i] = false;
+        }
     }
 
     // The main game loop
     // In here is where all the logic for my game will go
     public void gameLoop() {
-        
+
         //create lines for amount of letters
         createLinesOfWords();
 
         //check if the letter pressed by user is valid
         checkIfLetterInputed();
-        
-        
-        
-        
+
         //if restart button clicked restart game
         buttonpressed();
     }
@@ -365,8 +356,6 @@ public class hangingMan extends JComponent implements ActionListener {
         //save the first x spont in the X2s array as 50 plus the line's width
         X2s[0] = widthLine + 100;
 
-
-
         //go through the array of chatacters
         for (int i = 1; i < length; i++) {
             //save the spot as the previous 1st dot x value + the width of the line and the width of the spot between lines
@@ -378,21 +367,22 @@ public class hangingMan extends JComponent implements ActionListener {
             X2s[i] = X2s[i - 1] + widthLine + spaceWidth;
         }
     }
+
     private void checkIfLetterInputed() {
         //if letter was pressed
-        if(letter!='~'){
+        if (letter != '~') {
             //check the input
             checkInput();
         }
     }
-    
+
     private void checkInput() {
         //assume letter is wrong
         drawStick = true;
         //go through the word array of charachters
         for (int i = 0; i < length; i++) {
             //if the letter inputed by user equals the char in the unknown spot
-            if(manString.charAt(i)==letter){
+            if (manString.charAt(i) == letter) {
                 //then the char in the word array is equal the letter
                 word[i] = letter;
                 //set boolean to false
@@ -401,45 +391,59 @@ public class hangingMan extends JComponent implements ActionListener {
         }
         // 0 it out
         letter = '~';
-        
+
     }
-    
-     private void drawManStick() {
-         //check boolean if letter is wrong and set empty color to black if true 
-        if(drawStick == true){
+
+    private void drawManStick() {
+        //if boolean draw stick is true
+        if (drawStick == true) {
+            //go through color change array
+            for (int i = 0; i < 11; i++) {
+                //check to see where to update colour change
+                if (colorChange[i] == false) {
+                    //change first false in array to true
+                    colorChange[i] = true;
+                    //leave the loop
+                    break;
+                }
+            }
+        }
+        //check boolean if letter is wrong and set empty color to black if true 
+        if (colorChange[0] == true) {
             change = Black;
         }
-        else if(drawStick == true && change == Black){
+        if (colorChange[1] == true) {
             change1 = Black;
         }
-        else if(drawStick == true && change1 == Black){
+        if (colorChange[2] == true) {
             change2 = Black;
         }
-        else if(drawStick == true && change2 == Black){
+        if (colorChange[3] == true) {
             change3 = Black;
         }
-        else if(drawStick == true && change3 == Black){
+        if (colorChange[4] == true) {
             change4 = Black;
         }
-        else if(drawStick == true && change4 == Black){
+        if (colorChange[5] == true) {
             change5 = Black;
         }
-        else if(drawStick == true && change5 == Black){
+        if (colorChange[6] == true) {
             change6 = Black;
         }
-        else if(drawStick == true && change6 == Black){
+        if (colorChange[7] == true) {
             change7 = Black;
         }
-        else if(drawStick == true && change7 == Black){
+        if (colorChange[8] == true) {
             change8 = Black;
         }
-        else if(drawStick == true && change8 == Black){
+        if (colorChange[9] == true) {
             change9 = Black;
         }
-        else if(drawStick == true && change9 == Black){
+        if (colorChange[10] == true) {
             change10 = Black;
         }
         
+
     }
 
     private void buttonpressed() {
@@ -454,14 +458,7 @@ public class hangingMan extends JComponent implements ActionListener {
 
         }
 
-
     }
-
-    
-
-   
-
-    
 
     // Used to implement any of the Mouse Actions
     private class Mouse extends MouseAdapter {
@@ -501,9 +498,9 @@ public class hangingMan extends JComponent implements ActionListener {
         public void keyPressed(KeyEvent e) {
             //get the letter pressed by user
             letter = e.getKeyChar();
-            
-            System.out.println(letter+"");
-                
+
+            System.out.println(letter + "");
+
         }
 
         // if a key has been released
