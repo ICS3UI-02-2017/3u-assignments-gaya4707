@@ -98,7 +98,9 @@ public class hangingMan extends JComponent implements ActionListener {
 
     //create boolean to decide if a line needed to be drawn- set to false
     boolean drawStick = false;
-    private Component frame;
+    
+    
+    
     
 
     public hangingMan(Timer gameTimer) {
@@ -113,14 +115,16 @@ public class hangingMan extends JComponent implements ActionListener {
     char letter = '~';
     //create string to store the unknown word as a full (for comparing)
     String manString = "";
-    
+    //create the frame component for message 
+    private Component frame;
     //options for user to select when failure message pops up   
     Object[] options = {"try again", "quit"};
     
     //create boolean to change if the user wins- set to false
     boolean win = false;
-    //create integer to count the empty spaces in the word - set to the legth of the word
-    int empty = 0;
+    //create integer to count the full spaces in the word - set to the legth of the word
+    int full = 0;
+    
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -327,17 +331,17 @@ public class hangingMan extends JComponent implements ActionListener {
         //create lines for amount of letters
         createLinesOfWords();
 
-        //check if the letter pressed by user is valid
+        //check if there was a letter pressed by the user
         checkIfLetterInputed();
-        
-        //create a window that pops up if the word was guessed successfully
-        Success();
-        
-        //crate a window that pops up if the user loses
-        failure();
 
         //if restart button clicked restart game
         buttonpressed();
+        
+        //crate a window that pops up if the user loses
+        failure();
+        
+        //check if the user won- pop message if yes
+        Success();
         
         
     }
@@ -439,24 +443,30 @@ public class hangingMan extends JComponent implements ActionListener {
 
     private void Success() {
         //reset the empty integer to 0 again
-        ??//change name to full
-        empty=0;
-        //go through the charachter array, and if all the word array is complete- set boolean win to true
+        full=0;
+        //go through the charachter array, and if the letter is full and it to the count of full letters
         for (int i = 0; i < length; i++) {
             if(word[i]!='~'){
-                empty = empty+1;
+                full = full+1;
           }
         }
-        //if there are no more empty spots
-        if(empty ==length){
+        
+        //when there are no more empty spots(the full count is equal the elgth of tghe word) - set the boolean of win to true
+        if(full ==length){
             //set the boolean of win to true
             win = true;
         }
         
-        //pop the message alert if the boolean win is true
-        if(win == true){
-            JOptionPane.showMessageDialog(null, "You Win!");
+         
+        
+        //if boolean win id true run the method of winning
+        if(win==true){
+            ////wait until the letter last guessed is drawn
+            repaint();
+            //call the method that outputs the mesage window
+            winWindow();
         }
+        
         
     }
 
@@ -477,6 +487,35 @@ public class hangingMan extends JComponent implements ActionListener {
         //default button title
         options[0]); 
         
+        
+        //run method to check which buttons the user pressed
+        ManipulateMessageButtons(n);
+        }
+         
+    }
+     private void winWindow() {
+        //ouput the message to ask if user want to restart game, or to completatly quit
+        int n = JOptionPane.showOptionDialog(frame,
+        //output to user
+        "Hurray! You won !",
+        //name of message
+        "result",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,     //do not use a custom Icon
+        //the titles of buttons
+        options,  
+        //default button title
+        options[0]);
+        
+        //run method to check which buttons the user pressed
+        ManipulateMessageButtons(n);
+        
+        //set the boolean back to false once game was won
+        win = false;
+    }
+     
+     private void ManipulateMessageButtons(int n) {
         //get the integer that the user pressed
         //if pressed restart, restart game
         if(n==0){
@@ -487,9 +526,7 @@ public class hangingMan extends JComponent implements ActionListener {
             System.exit(0);
         }
         }
-         
-    }
-
+    
     private void restartGame() {
         //create new random number
             randNum = (int) (Math.random() * (120));
@@ -499,6 +536,10 @@ public class hangingMan extends JComponent implements ActionListener {
             preSetup();
             
     }
+
+    
+
+   
 
     // Used to implement any of the Mouse Actions
     private class Mouse extends MouseAdapter {
