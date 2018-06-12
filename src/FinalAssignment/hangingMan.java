@@ -47,6 +47,8 @@ public class hangingMan extends JComponent implements ActionListener {
     Font gameTitle = new Font("Britannic Bold", Font.PLAIN, 42);
     //custom create fornt of unknown word
     Font letterFont = new Font("Arial Rounded MT Bold", Font.PLAIN, 42);
+    //custon create font of the wrong letters pressed
+    Font WrongLetterFont = new Font("Arial Rounded MT Bold", Font.BOLD, 26);
     //set custom line thickness for hangman drawing
     BasicStroke manLineThick = new BasicStroke(5);
     //set custom line thickness for the face
@@ -124,6 +126,13 @@ public class hangingMan extends JComponent implements ActionListener {
     boolean win = false;
     //create integer to count the full spaces in the word - set to the legth of the word
     int full = 0;
+    
+    //create an empty character array to be filled by the wrong letters at the size of the amout of wrong trys
+    char[] wrongLetter = new char[10];
+    //create the initial x coordiante of the wrong letters
+    int Xwrong = 10;
+    //create an integer that will count up the wrong spots in the array of wrong letters
+    int j = 0;
     
 
     // GAME VARIABLES END HERE    
@@ -283,6 +292,25 @@ public class hangingMan extends JComponent implements ActionListener {
         //set color back to black 
         g.setColor(Color.BLACK);
         g.drawString("Restart", 250, 635);
+        
+        //set the font to smaller for the wrong letters
+        g.setFont(WrongLetterFont);
+        //draw the wrong letters already preesed
+        g.drawString("Wrong Letters: ", 50, 400);
+        //go through the charachter of wrong letters
+        Xwrong = 10;
+        for (int i = 0; i < 10; i++) {
+            //if a wrong letter was presssed
+            if(wrongLetter[i]!='~'){
+            //ouput it under the title of wrong letters
+            g.drawString(wrongLetter[i]+", ", Xwrong, 450);
+             Xwrong = Xwrong + 25;
+        }
+            //calculate the new x point that the next letter will be outputed at
+           
+        
+        }
+        
 
         // GAME DRAWING ENDS HERE
     }
@@ -312,8 +340,9 @@ public class hangingMan extends JComponent implements ActionListener {
             gameWords[i] = word;
         }
 
-        //create array of charachters for the unknown word
+        //create array of charachters for the unknown word and the wrong letters
         arreyOfCharcters();
+        
         System.out.println(randNum + ": " + gameWords[randNum]);
         //set the unknown word equal manString
         manString = gameWords[randNum];
@@ -356,6 +385,10 @@ public class hangingMan extends JComponent implements ActionListener {
         //fill that array in ~ 
         for (int i = 0; i < length; i++) {
             word[i] = blankSpace;
+        }
+        //fiil array of wrong letters in empty spaces as well
+        for (int i = 0; i < 10; i++) {
+            wrongLetter[i] = blankSpace;
         }
     }
 
@@ -402,10 +435,23 @@ public class hangingMan extends JComponent implements ActionListener {
                 word[i] = letter;
                 //set boolean to false
                 drawStick = false;
-            }
+            
         }
+        }
+        //for each time its wrong, add the wrong letter to characters array
+        if(drawStick == true&&letter!='~'){            
+            //set the char of wrong letters to equal the letter inputed at the first spot
+            wrongLetter[j] = letter;
+            //add 1 to the j integer that counts the spotb of wrong letter
+            j = j+1;
+            
+    }
+            
+        
         // 0 it out
         letter = '~';
+        
+        
 
     }
 
