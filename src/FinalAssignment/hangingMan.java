@@ -128,10 +128,10 @@ public class hangingMan extends JComponent implements ActionListener {
     int full = 0;
     
     //create an empty character array to be filled by the wrong letters at the size of the amout of wrong trys
-    char[] wrongLetter = new char[10];
+    char[] wrongLetter = new char[11];
     //create the initial x coordiante of the wrong letters
     int Xwrong = 10;
-    //create an integer that will count up the wrong spots in the array of wrong letters
+    //create an integer that will count up the wrong spots in the array of wrong letters start at 0
     int j = 0;
     
 
@@ -303,10 +303,19 @@ public class hangingMan extends JComponent implements ActionListener {
             //if a wrong letter was presssed
             if(wrongLetter[i]!='~'){
             //ouput it under the title of wrong letters
-            g.drawString(wrongLetter[i]+", ", Xwrong, 450);
-             Xwrong = Xwrong + 25;
+            g.drawString(wrongLetter[i]+", ", Xwrong, 450);            
+            
+            //calculate the next x coordinate the letter will be outputed to 
+             Xwrong = Xwrong + 32;
+                      
         }
-            //calculate the new x point that the next letter will be outputed at
+            //if on the last try, preesed a wrong letter
+             if(wrongLetter[10]!='~'){
+                 //output the last wrong word that was preed witha dot at the end
+                 g.drawString(wrongLetter[10]+".", 330, 450);
+             }
+            
+           
            
         
         }
@@ -387,7 +396,7 @@ public class hangingMan extends JComponent implements ActionListener {
             word[i] = blankSpace;
         }
         //fiil array of wrong letters in empty spaces as well
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 11; i++) {
             wrongLetter[i] = blankSpace;
         }
     }
