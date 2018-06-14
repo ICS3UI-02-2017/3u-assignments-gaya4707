@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Scanner;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -121,6 +124,11 @@ public class hangingMan extends JComponent implements ActionListener {
     private Component frame;
     //options for user to select when failure message pops up   
     Object[] options = {"try again", "quit"};
+    //import the image for win window
+    ImageIcon iconWin = new ImageIcon("winIcon_edited-1.jpg");
+    //import the image for losing message
+    ImageIcon iconLose = new ImageIcon("iconLose.png");
+    
     
     //create boolean to change if the user wins- set to false
     boolean win = false;
@@ -329,7 +337,20 @@ public class hangingMan extends JComponent implements ActionListener {
     public void preSetup() {
         // Any of your pre setup before the loop starts should go here
 
+        //get image for the win window icon
+        Image resizedWin = iconWin.getImage();
+        //resize the image to a smaller size
+        resizedWin = resizedWin.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+        //set the icon to be thew resized image
+        iconWin.setImage(resizedWin);
         //set up an array of all the words to be used for the game
+        
+        //get image for the lose window icon
+        Image resizedLose = iconWin.getImage();
+        //resize the image to a smaller size
+        resizedLose = resizedLose.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+        //set the icon to be thew resized image
+        iconLose.setImage(resizedLose)
         //create a check to make sure if there is an arror it will output it in the box of output
         try {
             in = new Scanner(new File("words"));
@@ -536,7 +557,7 @@ public class hangingMan extends JComponent implements ActionListener {
         "result",
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE,
-        null,     //do not use a custom Icon
+        iconLose,     //do not use a custom Icon
         //the titles of buttons
         options,  
         //default button title
@@ -556,8 +577,9 @@ public class hangingMan extends JComponent implements ActionListener {
         //name of message
         "result",
         JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE,
-        null,     //do not use a custom Icon
+        JOptionPane.INFORMATION_MESSAGE,
+        // use the custom Icon for win
+        iconWin,     
         //the titles of buttons
         options,  
         //default button title
