@@ -40,7 +40,7 @@ public class hangingMan extends JComponent implements ActionListener {
     // sets the framerate and delay for our game
     // this calculates the number of milliseconds per frame
     // you just need to select an approproate framerate
-    int desiredFPS = 10;
+    int desiredFPS = 30;
     int desiredTime = Math.round((1000 / desiredFPS));
     // timer used to run the game loop
     // this is what keeps our time running smoothly :)
@@ -346,11 +346,11 @@ public class hangingMan extends JComponent implements ActionListener {
         //set up an array of all the words to be used for the game
         
         //get image for the lose window icon
-        Image resizedLose = iconWin.getImage();
+        Image resizedLose = iconLose.getImage();
         //resize the image to a smaller size
         resizedLose = resizedLose.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
         //set the icon to be thew resized image
-        iconLose.setImage(resizedLose)
+        iconLose.setImage(resizedLose);
         //create a check to make sure if there is an arror it will output it in the box of output
         try {
             in = new Scanner(new File("words"));
@@ -609,6 +609,8 @@ public class hangingMan extends JComponent implements ActionListener {
             randNum = (int) (Math.random() * (120));
             //reset the letter pressed to be an empty space again
             letter = '~';
+            //reset j to 0 again
+            j = 0;
             //restart game
             preSetup();
             
