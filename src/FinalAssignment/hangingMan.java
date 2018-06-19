@@ -372,7 +372,7 @@ public class hangingMan extends JComponent implements ActionListener {
 
         //create array of charachters for the unknown word and the wrong letters
         arreyOfCharcters();
-        
+        //print the unknown word in the output box to check which word is needed to be guessed for testing purposess
         System.out.println(randNum + ": " + gameWords[randNum]);
         //set the unknown word equal manString
         manString = gameWords[randNum];
@@ -552,7 +552,8 @@ public class hangingMan extends JComponent implements ActionListener {
         //ouput the message to ask if user want to restart game, or to completatly quit
         int n = JOptionPane.showOptionDialog(frame,
         //output to user
-        "You Lose !",
+        "You Lose ! \n"
+                + "the word was "+ gameWords[randNum],
         //name of message
         "result",
         JOptionPane.YES_NO_OPTION,
@@ -658,8 +659,8 @@ public class hangingMan extends JComponent implements ActionListener {
         public void keyPressed(KeyEvent e) {
             //get the letter pressed by user
             letter = e.getKeyChar();
-
-            System.out.println(letter + "");
+            
+            
 
         }
 
